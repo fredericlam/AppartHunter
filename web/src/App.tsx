@@ -292,6 +292,7 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
             {price(l.price)}<span className="muted"> /month{l.colocation ? " · often per room" : ""}</span>
             {l.charges ? <span className="muted small"> · incl. {num(l.charges)} € charges</span> : null}
           </div>
+          <Sources l={l} />
           <div className="actions">
             <button className={`icon-btn${mark === "saved" ? " on" : ""}`} title="Save" onClick={() => onToggle(l.key, "saved")}>
               <Bookmark filled={mark === "saved"} />
@@ -330,11 +331,6 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
         <div className="foot">
           {l.price_per_m2 && <span className="spec muted small"><Euro />{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}
           <span className="spacer" />
-          <span className="muted small">
-            {SOURCE_LABEL[l.source] ?? l.source}
-            {l.also_on.map((a) => <a key={a.url} href={a.url} target="_blank" rel="noreferrer"> · {SOURCE_LABEL[a.source] ?? a.source}</a>)}
-
-          </span>
           <span className="score" title={Object.entries(l.score_parts).map(([k, v]) => `${k} ${Math.round(v * 100)}`).join("\n")}>
             {Math.round(l.score)}
           </span>
@@ -413,6 +409,24 @@ function Tags({ l }: { l: Listing }) {
       )}
       {l.garage ? <span className="tag"><Car />Garage</span> : l.parking ? <span className="tag"><Parking />Parking</span> : null}
       {feats.map((f) => <span key={f} className="tag">{FEATURES[f][0]}{FEATURES[f][1]}</span>)}
+    </div>
+  );
+}
+
+/** Every site this flat is published on (same flat merged across sites), each linking to its ad. */
+function Sources({ l }: { l: Listing }) {
+  const seen = new Set<string>();
+  const all = [{ source: l.source, url: l.url }, ...l.also_on].filter((s) => !seen.has(s.source) && seen.add(s.source));
+  const order = ["seloger", "bienici", "leboncoin"];
+  all.sort((a, b) => (order.indexOf(a.source) + 1 || 9) - (order.indexOf(b.source) + 1 || 9));
+  return (
+    <div className="sources" aria-label="Published on">
+      {all.map((s) => (
+        <a key={s.source} className={`src src-${s.source}`} href={s.url} target="_blank" rel="noreferrer"
+          title={`Open on ${SOURCE_LABEL[s.source] ?? s.source}`}>
+          {SOURCE_LABEL[s.source] ?? s.source}
+        </a>
+      ))}
     </div>
   );
 }
