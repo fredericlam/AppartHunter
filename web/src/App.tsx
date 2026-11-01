@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
-import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort } from "./types";
+import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort, type Target } from "./types";
 import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
-import { Bookmark, External, Eye, EyeOff, MapIcon, Refresh, Transit, Walk } from "./icons";
+import { Bookmark, External, Eye, EyeOff, MapIcon, Pin, Refresh, Transit, Walk } from "./icons";
 
 type Marks = Record<string, "saved" | "hidden">;
 
@@ -195,7 +195,7 @@ export default function App() {
             </div>
           )}
           {visible.map((l) => (
-            <Card key={l.key} l={l} mark={marks[l.key]} active={active === l.key}
+            <Card key={l.key} l={l} mark={marks[l.key]} active={active === l.key} school={data?.targets[0]}
               onHover={setActive} onToggle={toggleMark} ideal={data?.commute.ideal_minutes ?? 20} />
           ))}
         </section>
@@ -236,8 +236,8 @@ function Chip({ on, onClick, children, line }:
   );
 }
 
-function Card({ l, mark, active, ideal, onHover, onToggle }: {
-  l: Listing; mark?: "saved" | "hidden"; active: boolean; ideal: number;
+function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
+  l: Listing; mark?: "saved" | "hidden"; active: boolean; ideal: number; school?: Target;
   onHover: (k: string | null) => void; onToggle: (k: string, v: "saved" | "hidden") => void;
 }) {
   const [imgOk, setImgOk] = useState(true);
@@ -283,6 +283,7 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
             </span>
           ) : <span className="muted">location unknown</span>}
           <span className="muted">{[l.city, l.postal_code].filter(Boolean).join(" ")}</span>
+          <GmapsLinks l={l} school={school} />
         </div>
         {(l.near ?? []).length > 0 && (
           <div className="where">
@@ -331,5 +332,25 @@ function Dates({ l }: { l: Listing }) {
     <div className="dates muted">
       Publication date not given · tracked since {date(l.first_seen)}{upd}
     </div>
+  );
+}
+
+/** Google Maps: the listing's position (exact point when known, else its area) + transit route to school. */
+function GmapsLinks({ l, school }: { l: Listing; school?: Target }) {
+  const area = [l.postal_code, l.city].filter(Boolean).join(" ");
+  const here = l.location_precise && l.lat != null ? `${l.lat},${l.lon}` : area;
+  if (!here) return null;
+  const q = encodeURIComponent(here);
+  const place = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  const route = school &&
+    `https://www.google.com/maps/dir/?api=1&origin=${q}&destination=${school.lat},${school.lon}&travelmode=transit`;
+  return (
+    <span className="gmaps">
+      <a href={place} target="_blank" rel="noreferrer"
+        title={l.location_precise ? "Position given by the listing, within ~150 m (agencies hide the exact address)" : "Exact position not given: shows the area"}>
+        <Pin /> Google Maps
+      </a>
+      {route && <a href={route} target="_blank" rel="noreferrer" title="Real public-transport route to school">Route to school</a>}
+    </span>
   );
 }

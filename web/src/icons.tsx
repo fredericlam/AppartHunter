@@ -18,3 +18,5 @@ export const Refresh = ({ spin = false }: { spin?: boolean }) => (
   <svg {...base} className={spin ? "spin" : undefined}><path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7" /></svg>);
 export const MapIcon = () => (
   <svg {...base}><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14" /></svg>);
+export const Pin = () => (
+  <svg {...base} width={13} height={13}><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.3" /></svg>);
