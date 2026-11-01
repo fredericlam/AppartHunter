@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
 import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort, type Target } from "./types";
 import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
-import { Bookmark, External, Eye, EyeOff, MapIcon, Pin, Refresh, Transit, Walk } from "./icons";
+import { Area, Bed, Bookmark, Calendar, Car, Door, Euro, External, Eye, EyeOff, MapIcon, Parking, Pin, Refresh, Route, Sofa, Stairs, Transit, Walk } from "./icons";
+import { PALETTES, type PaletteId, useTheme } from "./theme";
 
 type Marks = Record<string, "saved" | "hidden">;
 
@@ -49,6 +50,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [marks, toggleMark] = useMarks();
+  const theme = useTheme();
   const [showHidden, setShowHidden] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -128,6 +130,14 @@ export default function App() {
               <Refresh /> Check now
             </a>
           ) : null}
+          <div className="palettes" role="radiogroup" aria-label="Colour palette">
+            {(Object.keys(PALETTES) as PaletteId[]).map((id) => (
+              <button key={id} role="radio" aria-checked={theme.palette === id} title={PALETTES[id].name}
+                className={`swatch${theme.palette === id ? " on" : ""}`}
+                style={{ "--sw": PALETTES[id][theme.dark ? "dark" : "light"] } as React.CSSProperties}
+                onClick={() => theme.setPalette(id)} />
+            ))}
+          </div>
           <button className={`btn ghost icon${mapOpen ? " on" : ""}`} onClick={() => setMapOpen((o) => !o)} title="Toggle map">
             <MapIcon />
           </button>
@@ -202,7 +212,7 @@ export default function App() {
         {mapOpen && data && (
           <aside className="mapwrap">
             <MapView listings={visible} targets={data.targets} idealMinutes={data.commute.ideal_minutes}
-              corridors={data.corridors ?? []}
+              corridors={data.corridors ?? []} accent={theme.accent} dark={theme.dark}
               activeKey={active} onSelect={select} />
           </aside>
         )}
@@ -242,13 +252,12 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
 }) {
   const [imgOk, setImgOk] = useState(true);
   const near = l.commute_min != null && l.commute_min <= ideal;
-  const specs = [
-    l.rooms && `T${l.rooms}`,
-    l.bedrooms && `${l.bedrooms} bedroom${l.bedrooms > 1 ? "s" : ""}`,
-    l.surface && `${num(l.surface)} m²`,
-    l.floor != null && (l.floor === 0 ? "ground floor" : `floor ${l.floor}`),
-    l.furnished && "furnished",
-  ].filter(Boolean);
+  const specs: [React.ReactNode, string][] = [];
+  if (l.rooms) specs.push([<Door />, `T${l.rooms}`]);
+  if (l.bedrooms) specs.push([<Bed />, `${l.bedrooms} bedroom${l.bedrooms > 1 ? "s" : ""}`]);
+  if (l.surface) specs.push([<Area />, `${num(l.surface)} m²`]);
+  if (l.floor != null) specs.push([<Stairs />, l.floor === 0 ? "Ground floor" : `Floor ${l.floor}`]);
+  if (l.furnished) specs.push([<Sofa />, "Furnished"]);
 
   return (
     <article id={`card-${l.key}`} className={`card${active ? " active" : ""}${mark === "hidden" ? " dim" : ""}`}
@@ -274,7 +283,9 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
             <a className="icon-btn" href={l.url} target="_blank" rel="noreferrer" title="Open listing"><External /></a>
           </div>
         </div>
-        <div className="specs">{specs.join(" · ")}</div>
+        <div className="specs">
+          {specs.map(([icon, text]) => <span key={text} className="spec">{icon}{text}</span>)}
+        </div>
         <div className="where">
           {l.commute_min != null ? (
             <span className={`commute${near ? " near" : ""}`}>
@@ -297,8 +308,8 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
         )}
         <Dates l={l} />
         <div className="foot">
-          {l.garage ? <span className="tag">Garage</span> : l.parking ? <span className="tag">Parking</span> : null}
-          {l.price_per_m2 && <span className="muted small">{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}
+          {l.garage ? <span className="tag"><Car />Garage</span> : l.parking ? <span className="tag"><Parking />Parking</span> : null}
+          {l.price_per_m2 && <span className="spec muted small"><Euro />{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}
           <span className="spacer" />
           <span className="muted small">
             {SOURCE_LABEL[l.source] ?? l.source}
@@ -324,13 +335,13 @@ function Dates({ l }: { l: Listing }) {
     const days = daysSince(published);
     return (
       <div className={`dates${days > OLD_AFTER_DAYS ? " old" : ""}`}>
-        Online since {date(published)} · <b>{duration(days)}</b>{upd}
+        <Calendar />Online since {date(published)} · <b>{duration(days)}</b>{upd}
       </div>
     );
   }
   return (
     <div className="dates muted">
-      Publication date not given · tracked since {date(l.first_seen)}{upd}
+      <Calendar />Publication date not given · tracked since {date(l.first_seen)}{upd}
     </div>
   );
 }
@@ -350,7 +361,7 @@ function GmapsLinks({ l, school }: { l: Listing; school?: Target }) {
         title={l.location_precise ? "Position given by the listing, within ~150 m (agencies hide the exact address)" : "Exact position not given: shows the area"}>
         <Pin /> Google Maps
       </a>
-      {route && <a href={route} target="_blank" rel="noreferrer" title="Real public-transport route to school">Route to school</a>}
+      {route && <a href={route} target="_blank" rel="noreferrer" title="Real public-transport route to school"><Route /> Route to school</a>}
     </span>
   );
 }
