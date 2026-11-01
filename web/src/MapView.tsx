@@ -19,6 +19,15 @@ interface Props {
 // ~20 min walk ≈ 1.23 km straight line (see apt/geo.py)
 const walkRadiusM = (minutes: number) => (minutes / 60) * 4.8 / 1.3 * 1000;
 
+/** Approximate positions (neighbourhood centre): spread pins up to ~250 m around it, stable per listing. */
+function spread(key: string, lat: number, lon: number): [number, number] {
+  let h = 2166136261;
+  for (let i = 0; i < key.length; i++) h = Math.imul(h ^ key.charCodeAt(i), 16777619);
+  const angle = ((h >>> 0) % 360) * (Math.PI / 180);
+  const r = 0.0005 + (((h >>> 9) % 1000) / 1000) * 0.0018; // ≈ 50–250 m
+  return [lat + r * Math.sin(angle), lon + (r * Math.cos(angle)) / Math.cos((lat * Math.PI) / 180)];
+}
+
 const LINE_COLOR = (name: string) => (name.includes("T4") ? "#7c5cbf" : "#2f9e5b");
 
 export default function MapView({ listings, targets, idealMinutes, corridors, accent, dark, activeKey, onSelect }: Props) {
@@ -103,7 +112,8 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
     const pts: L.LatLngExpression[] = [];
     for (const l of listings) {
       if (l.lat == null || l.lon == null) continue;
-      const mk = L.marker([l.lat, l.lon], {
+      const [lat, lon] = l.location_precise ? [l.lat, l.lon] : spread(l.key, l.lat, l.lon);
+      const mk = L.marker([lat, lon], {
         icon: L.divIcon({
           className: "",
           html: `<div class="pin${l.location_precise ? "" : " approx"}${l.favorite ? " fav" : ""}">${l.favorite ? HEART_SVG : ""}${num(l.price)}</div>`,
@@ -114,7 +124,7 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
       }).on("click", () => onSelect(l.key));
       mk.addTo(lg);
       markers.current.set(l.key, mk);
-      pts.push([l.lat, l.lon]);
+      pts.push([lat, lon]);
     }
     if (!fitted.current && pts.length) {
       for (const t of targets) pts.push([t.lat, t.lon]);

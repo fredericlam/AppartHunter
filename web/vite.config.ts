@@ -27,6 +27,7 @@ function refreshApi(): Plugin {
         res.statusCode = result.ok ? 200 : 500;
         res.end(JSON.stringify(result));
       });
+
     },
   };
 }

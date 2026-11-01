@@ -1,6 +1,32 @@
 [
   {
     "source": "seloger",
+    "url": "https://www.seloger.com/annonce/location/auvergne-rhone-alpes/rhone-69/lyon-69000/26QP1H72RLJD",
+    "title": "T3 meublé — 52 rue de l'Abbé Boisard, Lyon 3e (exclusivité Clesev)",
+    "price": 1250,
+    "rooms": 3,
+    "bedrooms": 2,
+    "surface": 66,
+    "floor": 1,
+    "city": "Lyon 3e",
+    "postal_code": "69003",
+    "lat": 45.750627,
+    "lon": 4.858277,
+    "precise": true,
+    "furnished": true,
+    "features": [
+      "kitchen",
+      "lift",
+      "balcony"
+    ],
+    "charges": 160,
+    "photo": "https://mms.seloger.com/c/7/0/7/c707fa06-cf3f-4332-9192-0c2436d12d1f.jpg",
+    "description": "Résidence récente, 1er étage avec ascenseur, cuisine équipée ouverte sur séjour avec balcon, 2 chambres, salle de bains. Chauffage et eau inclus dans les charges (160 €). Honoraires 877,73 €, dépôt 2 180 €. DPE C. 5 min à pied de la gare Part-Dieu.",
+    "note": "Spotted by you · exclusive",
+    "added": "2026-11-01"
+  },
+  {
+    "source": "seloger",
     "url": "https://www.seloger.com/annonce/location/auvergne-rhone-alpes/rhone-69/lyon-69000/26FSG1SJAXXT",
     "title": "Appartement à louer — exclusivité Sixième Avenue Immobilier",
     "price": 1250,

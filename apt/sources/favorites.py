@@ -34,11 +34,13 @@ def fetch(cfg: dict) -> list[Listing]:
             location_precise=bool(f.get("precise")),  # neighbourhood-level unless told otherwise
             published=f.get("published", ""),
             floor=f.get("floor"),
+            furnished=f.get("furnished"),
             parking=f.get("parking"),
             garage=f.get("garage"),
             photo=f.get("photo", ""),
             description=f.get("description", ""),
             features=list(f.get("features", [])),
+            extra={"charges": f["charges"]} if f.get("charges") else {},
             favorite=True,
             note=f.get("note", "") or (f"Area: {f['area']}" if f.get("area") else ""),
         ))

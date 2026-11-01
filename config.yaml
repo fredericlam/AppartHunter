@@ -61,6 +61,10 @@ sources:
   favorites:
     enabled: true
     file: favorites.json      # your SeLoger / Leboncoin favourites, copied from your browser
+  seloger_scan:
+    enabled: true
+    file: seloger_scan.txt    # SeLoger results read from your browser by Claude, on request
+    max_age_days: 21          # older scans are ignored (listings may be gone)
   bienici:
     enabled: true
     max_pages: 12             # 50 listings/page, newest first
