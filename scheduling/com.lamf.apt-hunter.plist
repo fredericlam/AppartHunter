@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.lamf.apt-hunter</string>
+  <key>WorkingDirectory</key><string>/Users/lamf/Web/github.com/SearchAppartment</string>
+  <key>ProgramArguments</key><array>
+    <string>/Users/lamf/Web/github.com/SearchAppartment/.venv/bin/python</string><string>run.py</string>
+    <string>--jitter</string><string>1200</string>
+  </array>
+  <!-- 5 runs/day, each delayed randomly by up to 20 min: ~30 light requests/day to Bien'ici -->
+  <key>StartCalendarInterval</key><array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>11</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>17</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
+  <key>StandardOutPath</key><string>/Users/lamf/Web/github.com/SearchAppartment/data/run.log</string>
+  <key>StandardErrorPath</key><string>/Users/lamf/Web/github.com/SearchAppartment/data/run.log</string>
+</dict></plist>

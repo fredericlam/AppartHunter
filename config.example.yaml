@@ -1,0 +1,57 @@
+# Copy to config.yaml and edit.
+
+# Places to live close to. The commute is computed to the FARTHEST one, so if your
+# daughters go to different sites, list both. Remove the one you don't need.
+targets:
+  - name: "Chevreul Lestonnac — collège/lycée (bd des Tchécoslovaques)"
+    address: "Boulevard des Tchécoslovaques 69007 Lyon"
+    lat: 45.74914     # pinned from OpenStreetMap (the address search alone is imprecise)
+    lon: 4.85889
+  # - name: "Chevreul Lestonnac — site rue Chevreul"
+  #   address: "7 rue Chevreul 69007 Lyon"
+
+commute:
+  ideal_minutes: 20   # walk or public transport: listings within this rank first
+  max_minutes: 30     # "a little farther": still shown, ranked lower; beyond = dropped
+
+search:
+  transaction: rent           # rent | buy
+  property_types: [flat]
+  cities: [Lyon, Villeurbanne, Vénissieux, Saint-Fons, Bron]  # covers the 30-min zone around Lyon 7e
+  min_rooms: 3              # fetch T3 → T5; the app shows T4 (3 bedrooms) by default
+  max_rooms: 5
+  min_price: null
+  max_price: 2000             # € upper bound for fetching; refine in the app
+  parking: preferred          # required | preferred | any
+  garage: any                 # required | preferred | any  (closed garage / box)
+  exclude_colocation: true
+
+# How listings are ranked (relative weights, 0 disables).
+scoring:
+  commute: 5
+  price: 3
+  price_per_m2: 1
+  parking: 2
+  garage: 1
+  freshness: 1
+
+sources:
+  bienici:
+    enabled: true
+    max_pages: 12             # 50 listings/page, newest first
+    delay_seconds: [3, 8]     # random pause between requests (be polite)
+
+  # Leboncoin, SeLoger, PAP, Logic-Immo, Figaro Immo... block automated access.
+  # Instead: save a search with e-mail alerts on each site; this source reads
+  # those alert e-mails from your mailbox (IMAP, read-only).
+  email_alerts:
+    enabled: false
+    imap_host: imap.gmail.com
+    username: you@gmail.com
+    password_env: APT_IMAP_PASSWORD   # Gmail "app password", exported in this env var
+    folder: INBOX
+    days_back: 7
+
+output:
+  db: data/listings.sqlite
+  json: web/public/listings.json   # cache read by the web app
