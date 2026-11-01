@@ -60,6 +60,7 @@ def to_listing(a: dict) -> Listing:
         lon=pos.get("lon"),
         location_precise=bool(pos) and (a.get("blurInfo") or {}).get("radius", 999) <= 150,
         published="" if (a.get("publicationDate") or "1970").startswith("1970") else a["publicationDate"],
+        updated=a.get("modificationDate") or "",
         dpe=(a.get("energyClassification") or "").upper(),
         furnished=a.get("isFurnished"),
         floor=a.get("floor"),

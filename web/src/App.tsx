@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
 import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort } from "./types";
-import { ago, isNew, listedAt, num, price, SOURCE_LABEL } from "./format";
+import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
 import { Bookmark, External, Eye, EyeOff, MapIcon, Refresh, Transit, Walk } from "./icons";
 
 type Marks = Record<string, "saved" | "hidden">;
@@ -294,6 +294,7 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
             ))}
           </div>
         )}
+        <Dates l={l} />
         <div className="foot">
           {l.garage ? <span className="tag">Garage</span> : l.parking ? <span className="tag">Parking</span> : null}
           {l.price_per_m2 && <span className="muted small">{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}
@@ -301,7 +302,7 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
           <span className="muted small">
             {SOURCE_LABEL[l.source] ?? l.source}
             {l.also_on.map((a) => <a key={a.url} href={a.url} target="_blank" rel="noreferrer"> · {SOURCE_LABEL[a.source] ?? a.source}</a>)}
-            {" · "}{ago(listedAt(l))}
+
           </span>
           <span className="score" title={Object.entries(l.score_parts).map(([k, v]) => `${k} ${Math.round(v * 100)}`).join("\n")}>
             {Math.round(l.score)}
@@ -309,5 +310,26 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
         </div>
       </div>
     </article>
+  );
+}
+
+const OLD_AFTER_DAYS = 45;
+
+function Dates({ l }: { l: Listing }) {
+  const published = realDate(l.published);
+  const updated = realDate(l.updated);
+  const upd = updated && <span className="muted"> · updated {shortDate(updated)}</span>;
+  if (published) {
+    const days = daysSince(published);
+    return (
+      <div className={`dates${days > OLD_AFTER_DAYS ? " old" : ""}`}>
+        Online since {date(published)} · <b>{duration(days)}</b>{upd}
+      </div>
+    );
+  }
+  return (
+    <div className="dates muted">
+      Publication date not given · tracked since {date(l.first_seen)}{upd}
+    </div>
   );
 }

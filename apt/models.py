@@ -18,7 +18,8 @@ class Listing:
     lat: float | None = None
     lon: float | None = None
     location_precise: bool = False  # True = real GPS, False = city/arrondissement centroid
-    published: str = ""         # ISO date
+    published: str = ""         # ISO date the ad went online ("" = not given by the source)
+    updated: str = ""           # ISO date of the source's last modification
     dpe: str = ""               # energy class A..G
     furnished: bool | None = None
     floor: int | None = None

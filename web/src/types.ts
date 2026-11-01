@@ -13,6 +13,7 @@ export interface Listing {
   lon: number | null;
   location_precise: boolean;
   published: string;
+  updated?: string;
   furnished: boolean | null;
   floor: number | null;
   parking: number | null;

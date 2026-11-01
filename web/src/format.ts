@@ -12,6 +12,22 @@ export function ago(iso: string | null): string {
   return "just now";
 }
 
+const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
+const shortFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
+export const date = (iso: string) => dateFmt.format(new Date(iso));
+export const shortDate = (iso: string) => shortFmt.format(new Date(iso));
+export const daysSince = (iso: string) => Math.floor((Date.now() - new Date(iso).getTime()) / 86400_000);
+
+/** "3 days", "5 weeks", "4 months" */
+export function duration(days: number): string {
+  if (days < 1) return "today";
+  if (days < 14) return `${days} day${days > 1 ? "s" : ""}`;
+  if (days < 60) return `${Math.round(days / 7)} weeks`;
+  return `${Math.round(days / 30.4)} months`;
+}
+
+export const realDate = (iso?: string) => (iso && !iso.startsWith("1970") ? iso : "");
+
 /** Listing date: publication date when real, else when we first saw it. */
 export const listedAt = (l: { published: string; first_seen: string }) =>
   l.published && !l.published.startsWith("1970") ? l.published : l.first_seen;
