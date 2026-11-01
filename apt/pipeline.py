@@ -43,7 +43,19 @@ RE_COLOC = re.compile(r"\bcolocation\b|\bcoloc\b|chambre (?:dans|en) (?:une )?co
 RE_PARKING = re.compile(r"\b(parking|place de stationnement|stationnement privatif)\b", re.I)
 RE_GARAGE = re.compile(r"\bgarage\b(?! ?(?:à|a|pour|de)? ?(?:vélos?|velos?|2 roues|deux roues))"
                        r"|\bbox\b(?! ?(?:internet|fibre|adsl|tv|wifi|vélos?|velos?))", re.I)
-RE_NEGATION = re.compile(r"(?:pas de|sans|aucun|ni)\s+(?:\w+\s+)?$", re.I)
+RE_NEGATION = re.compile(r"(?:pas d[e']|sans|aucune?|ni)\s*(?:\w+\s+)?$", re.I)
+
+# Amenity tags detected in listing text (French), negation-aware.
+RE_FEATURES = {
+    "ac": re.compile(r"\bclimatis(?:ation|ée?s?)\b|\bclim\b|\bair conditionn[ée]|\bréversible\b", re.I),
+    "cellar": re.compile(r"\bcaves?\b", re.I),
+    "kitchen": re.compile(r"\bcuisine\s+(?:\w+\s+){0,2}?(?:équipée|equipee|aménagée|amenagee|intégrée|integree)", re.I),
+    "terrace": re.compile(r"\bterrasses?\b", re.I),
+    "balcony": re.compile(r"\bbalcons?\b|\bloggias?\b", re.I),
+    "lift": re.compile(r"\bascenseurs?\b", re.I),
+    "baths2": re.compile(r"\b(?:2|deux)\s+salles?\s+d(?:e\s+|['’]\s*)(?:eau|bains?)"
+                         r"|\bsalles? de bains? et (?:une )?salles? d['’]\s*eau", re.I),
+}
 
 
 def _mentions(rx: re.Pattern, text: str) -> bool:
@@ -60,11 +72,16 @@ def enrich_from_text(l: Listing) -> None:
         l.garage = True
     if not l.parking and (l.garage or _mentions(RE_PARKING, text)):
         l.parking = max(1, l.parking or 0)
+    for key, rx in RE_FEATURES.items():
+        if key not in l.features and _mentions(rx, text):
+            l.features.append(key)
 
 
 def keep(l: Listing, s: dict, max_minutes: int) -> bool:
-    if l.colocation and s.get("exclude_colocation", True):
-        return False
+    if l.colocation:  # flatshares: only big enough flats (the whole flat may be negotiable)
+        min_rooms = s.get("colocation_min_rooms")
+        if min_rooms is None or (l.rooms or 0) < min_rooms:
+            return False
     if s.get("max_price") and l.price and l.price > s["max_price"]:
         return False
     if s.get("min_price") and l.price and l.price < s["min_price"]:
@@ -121,7 +138,7 @@ def score(listings: list[Listing], cfg: dict) -> None:
     ppm = sorted(l.price_per_m2 for l in listings if l.price_per_m2)
     prices_by_rooms: dict = {}
     for l in listings:  # compare a T4's rent with other T4s, not with T3s
-        if l.price:
+        if l.price and not l.colocation:  # flatshare prices are usually per room
             prices_by_rooms.setdefault(l.rooms, []).append(l.price)
 
     def rank_low(v, arr):  # 1 = lowest of the batch
@@ -142,8 +159,8 @@ def score(listings: list[Listing], cfg: dict) -> None:
     for l in listings:
         parts = {
             "commute": commute_score(l.commute_min) * (1 if l.location_precise else 0.9),
-            "price": rank_low(l.price, sorted(prices_by_rooms.get(l.rooms, []))),
-            "price_per_m2": rank_low(l.price_per_m2, ppm),
+            "price": 0.5 if l.colocation else rank_low(l.price, sorted(prices_by_rooms.get(l.rooms, []))),
+            "price_per_m2": 0.5 if l.colocation else rank_low(l.price_per_m2, ppm),
             "parking": want(s.get("parking", "preferred"), l.parking),
             "garage": want(s.get("garage", "any"), l.garage),
             "freshness": 0.5 if (a := _age_days(l.published)) is None else max(0.0, 1 - a / 14),

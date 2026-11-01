@@ -46,7 +46,7 @@ search:
   max_price: 2000             # € upper bound for fetching; refine in the app
   parking: preferred          # required | preferred | any
   garage: any                 # required | preferred | any  (closed garage / box)
-  exclude_colocation: true
+  colocation_min_rooms: 3     # keep flatshare ads of 3+ rooms (ask for the whole flat); null = exclude all
 
 # How listings are ranked (relative weights, 0 disables).
 scoring:

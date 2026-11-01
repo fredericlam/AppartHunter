@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
 import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Room, type Sort, type Target } from "./types";
 import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
+import { Balcony, Bath, Cellar, Kitchen, Lift, Snow, Sun, Users } from "./icons";
 import { Area, Bed, Bookmark, Calendar, Car, Door, Euro, External, Eye, EyeOff, MapIcon, Parking, Pin, Refresh, Route, Sofa, Stairs, Transit, Walk } from "./icons";
 import { PALETTES, type PaletteId, useTheme } from "./theme";
 
@@ -22,6 +23,7 @@ function useMarks() {
 function matches(l: Listing, f: Filters, marks: Marks, showHidden: boolean) {
   if (marks[l.key] === "hidden" && !showHidden) return false;
   if (f.onlySaved && marks[l.key] !== "saved") return false;
+  if (!f.flatshares && l.colocation) return false;
   if (f.rooms.length) {
     const size = roomKey(l.rooms);
     if (!size || !f.rooms.includes(size)) return false;
@@ -186,6 +188,7 @@ export default function App() {
         <Chip on={filters.garage} onClick={() => set("garage", !filters.garage)}>Garage</Chip>
         <Chip on={filters.onlyNew} onClick={() => set("onlyNew", !filters.onlyNew)}>New</Chip>
         <Chip on={filters.onlySaved} onClick={() => set("onlySaved", !filters.onlySaved)}>Saved</Chip>
+        <Chip on={filters.flatshares} onClick={() => set("flatshares", !filters.flatshares)}>Flatshares</Chip>
         <div className="spacer" />
         {!isDefault && <button className="link" onClick={() => setFilters(DEFAULT_FILTERS)}>Reset</button>}
         <select className="sort" value={filters.sort} onChange={(e) => set("sort", e.target.value as Sort)}>
@@ -285,7 +288,7 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
       <div className="info">
         <div className="row">
           <div className="price">
-            {price(l.price)}<span className="muted"> /month</span>
+            {price(l.price)}<span className="muted"> /month{l.colocation ? " · often per room" : ""}</span>
             {l.charges ? <span className="muted small"> · incl. {num(l.charges)} € charges</span> : null}
           </div>
           <div className="actions">
@@ -322,8 +325,8 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
           </div>
         )}
         <Dates l={l} />
+        <Tags l={l} />
         <div className="foot">
-          {l.garage ? <span className="tag"><Car />Garage</span> : l.parking ? <span className="tag"><Parking />Parking</span> : null}
           {l.price_per_m2 && <span className="spec muted small"><Euro />{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}
           <span className="spacer" />
           <span className="muted small">
@@ -378,5 +381,31 @@ function GmapsLinks({ l, school }: { l: Listing; school?: Target }) {
       </a>
       {route && <a href={route} target="_blank" rel="noreferrer" title="Real public-transport route to school"><Route /> Route to school</a>}
     </span>
+  );
+}
+
+const FEATURES: Record<string, [React.ReactNode, string]> = {
+  ac: [<Snow />, "Air con"],
+  cellar: [<Cellar />, "Cellar"],
+  kitchen: [<Kitchen />, "Fitted kitchen"],
+  terrace: [<Sun />, "Terrace"],
+  balcony: [<Balcony />, "Balcony"],
+  lift: [<Lift />, "Lift"],
+  baths2: [<Bath />, "2+ bathrooms"],
+};
+
+function Tags({ l }: { l: Listing }) {
+  const feats = (l.features ?? []).filter((f) => f in FEATURES);
+  if (!l.colocation && !l.garage && !l.parking && feats.length === 0) return null;
+  return (
+    <div className="tags">
+      {l.colocation && (
+        <span className="tag coloc" title="Listed as a flatshare: the price is often per room. Ask the agency whether you can rent the whole flat.">
+          <Users />Flatshare · ask for whole flat
+        </span>
+      )}
+      {l.garage ? <span className="tag"><Car />Garage</span> : l.parking ? <span className="tag"><Parking />Parking</span> : null}
+      {feats.map((f) => <span key={f} className="tag">{FEATURES[f][0]}{FEATURES[f][1]}</span>)}
+    </div>
   );
 }

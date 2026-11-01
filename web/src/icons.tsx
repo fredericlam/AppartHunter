@@ -40,3 +40,19 @@ export const Route = () => (
   <svg {...base}><circle cx="6" cy="18" r="2" /><circle cx="18" cy="6" r="2" /><path d="M8 18h7.5a3.5 3.5 0 000-7h-7a3.5 3.5 0 010-7H16" /></svg>);
 export const Euro = () => (
   <svg {...base}><path d="M17 6.5A6.5 6.5 0 0011 5a7 7 0 000 14 6.5 6.5 0 006-1.5M4 10h9M4 14h9" /></svg>);
+export const Snow = () => (
+  <svg {...base}><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5" /></svg>);
+export const Cellar = () => (
+  <svg {...base}><path d="M4 9l8-5 8 5v11H4zM9 20v-6h6v6" /></svg>);
+export const Kitchen = () => (
+  <svg {...base}><rect x="4" y="3" width="16" height="18" rx="2" /><path d="M4 9h16M8 6h.01M11 6h.01M9 13h6" /></svg>);
+export const Sun = () => (
+  <svg {...base}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>);
+export const Balcony = () => (
+  <svg {...base}><path d="M3 12h18M5 12v8M9 12v8M15 12v8M19 12v8M3 20h18M8 12V5a1 1 0 011-1h6a1 1 0 011 1v7" /></svg>);
+export const Lift = () => (
+  <svg {...base}><rect x="5" y="3" width="14" height="18" rx="2" /><path d="M9.5 9L12 6.5 14.5 9M9.5 15l2.5 2.5 2.5-2.5" /></svg>);
+export const Bath = () => (
+  <svg {...base}><path d="M4 12h16v3a4 4 0 01-4 4H8a4 4 0 01-4-4zM6 12V6a2 2 0 014 0M7 19l-1 2M17 19l1 2" /></svg>);
+export const Users = () => (
+  <svg {...base}><circle cx="9" cy="8" r="3" /><path d="M3 20a6 6 0 0112 0M16 5a3 3 0 010 6M21 20a6 6 0 00-4-5.6" /></svg>);

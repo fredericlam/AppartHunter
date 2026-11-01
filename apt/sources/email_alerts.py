@@ -23,7 +23,7 @@ from ..models import Listing
 # domain fragment -> (source name, regex a listing URL must match)
 SITES = {
     "leboncoin.fr": ("leboncoin", re.compile(r"leboncoin\.fr/(ad/|[a-z_]+/\d+)")),
-    "seloger.com": ("seloger", re.compile(r"seloger\.com/annonces/")),
+    "seloger.com": ("seloger", re.compile(r"seloger\.com/annonces?/")),
     "pap.fr": ("pap", re.compile(r"pap\.fr/annonces?/")),
     "logic-immo.com": ("logicimmo", re.compile(r"logic-immo\.com/(detail|annonce)")),
     "lefigaro.fr": ("figaroimmo", re.compile(r"immobilier\.lefigaro\.fr/annonces/annonce-")),

@@ -42,6 +42,24 @@ def build_filters(search: dict, zones: list[str], page: int) -> dict:
     return f
 
 
+def features_of(a: dict) -> list[str]:
+    """Amenities from Bien'ici's structured fields (text detection fills the gaps later)."""
+    f = []
+    if a.get("hasAirConditioning"):
+        f.append("ac")
+    if a.get("hasCellar") or a.get("cellarsOrUndergroundsQuantity"):
+        f.append("cellar")
+    if a.get("hasTerrace") or a.get("terracesQuantity"):
+        f.append("terrace")
+    if a.get("hasBalcony") or a.get("balconyQuantity"):
+        f.append("balcony")
+    if a.get("hasElevator"):
+        f.append("lift")
+    if (a.get("bathroomsQuantity") or 0) + (a.get("showerRoomsQuantity") or 0) >= 2:
+        f.append("baths2")
+    return f
+
+
 def to_listing(a: dict) -> Listing:
     pos = (a.get("blurInfo") or {}).get("position") or {}
     photos = a.get("photos") or []
@@ -68,6 +86,8 @@ def to_listing(a: dict) -> Listing:
                 or (0 if "parkingPlacesQuantity" in a else None),
         garage=bool(a.get("enclosedParkingQuantity")) or None,
         colocation=bool(a.get("flatSharing")),
+        bathrooms=((a.get("bathroomsQuantity") or 0) + (a.get("showerRoomsQuantity") or 0)) or None,
+        features=features_of(a),
         photo=(photos[0].get("url") if photos else "") or "",
         description=(a.get("description") or "")[:1500],
         extra={"charges": a.get("charges"), "agency": a.get("accountType")},

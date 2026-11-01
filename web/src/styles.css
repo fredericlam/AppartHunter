@@ -256,3 +256,7 @@ svg { flex: none; }
   .card { grid-template-columns: 1fr; gap: 12px; }
   .status > .muted, .palettes { display: none; }
 }
+
+/* ---------- amenity tags ---------- */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 2px; }
+.tag.coloc { background: color-mix(in oklab, var(--warn) 12%, var(--surface)); color: color-mix(in oklab, var(--warn) 80%, var(--ink)); }

@@ -18,6 +18,9 @@ export interface Listing {
   floor: number | null;
   parking: number | null;
   garage: boolean | null;
+  colocation?: boolean;
+  bathrooms?: number | null;
+  features?: string[];   // "ac" | "cellar" | "kitchen" | "terrace" | "balcony" | "lift" | "baths2"
   photo: string;
   description: string;
   distance_km: number | null;
@@ -59,6 +62,7 @@ export interface Filters {
   garage: boolean;
   onlyNew: boolean;
   onlySaved: boolean;
+  flatshares: boolean;      // include flatshare ads (3+ rooms)
   sort: Sort;
 }
 
@@ -71,5 +75,6 @@ export const DEFAULT_FILTERS: Filters = {
   garage: false,
   onlyNew: false,
   onlySaved: false,
+  flatshares: true,
   sort: "best",
 };

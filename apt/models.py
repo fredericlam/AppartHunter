@@ -26,6 +26,8 @@ class Listing:
     parking: int | None = None    # parking spaces (None = unknown)
     garage: bool | None = None    # closed garage / box
     colocation: bool = False
+    bathrooms: int | None = None  # bathrooms + shower rooms
+    features: list = field(default_factory=list)  # "ac", "cellar", "kitchen", "terrace", "balcony", "lift", "baths2"
     photo: str = ""
     description: str = ""
     # computed
