@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
-import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort, type Target } from "./types";
+import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Room, type Sort, type Target } from "./types";
 import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
 import { Area, Bed, Bookmark, Calendar, Car, Door, Euro, External, Eye, EyeOff, MapIcon, Parking, Pin, Refresh, Route, Sofa, Stairs, Transit, Walk } from "./icons";
 import { PALETTES, type PaletteId, useTheme } from "./theme";
@@ -22,9 +22,9 @@ function useMarks() {
 function matches(l: Listing, f: Filters, marks: Marks, showHidden: boolean) {
   if (marks[l.key] === "hidden" && !showHidden) return false;
   if (f.onlySaved && marks[l.key] !== "saved") return false;
-  if (f.rooms !== "any") {
-    if (l.rooms == null) return false;
-    if (f.rooms === "5+" ? l.rooms < 5 : l.rooms !== Number(f.rooms)) return false;
+  if (f.rooms.length) {
+    const size = roomKey(l.rooms);
+    if (!size || !f.rooms.includes(size)) return false;
   }
   if (f.commute !== "any") {
     const nearSchool = l.commute_min != null && l.commute_min <= f.commute;
@@ -38,8 +38,13 @@ function matches(l: Listing, f: Filters, marks: Marks, showHidden: boolean) {
   return true;
 }
 
+const roomKey = (n: number | null): Room | null => (n == null ? null : n >= 5 ? "5+" : n === 4 ? "4" : n === 3 ? "3" : null);
+/** "Best match" shows T4 first, then T3, then T5+ — each group ranked by score. */
+const ROOM_PRIORITY: Record<string, number> = { "4": 0, "3": 1, "5+": 2 };
+const roomRank = (l: Listing) => ROOM_PRIORITY[roomKey(l.rooms) ?? ""] ?? 3;
+
 const SORTS: Record<Sort, (a: Listing, b: Listing) => number> = {
-  best: (a, b) => b.score - a.score,
+  best: (a, b) => roomRank(a) - roomRank(b) || b.score - a.score,
   commute: (a, b) => (a.commute_min ?? 999) - (b.commute_min ?? 999),
   price: (a, b) => (a.price ?? 1e9) - (b.price ?? 1e9),
   newest: (a, b) => listedAt(b).localeCompare(listedAt(a)),
@@ -145,8 +150,18 @@ export default function App() {
       </header>
 
       <div className="filters">
-        <Segmented label="Rooms" value={filters.rooms} onChange={(v) => set("rooms", v)}
-          options={[["3", "T3"], ["4", "T4"], ["5+", "T5+"], ["any", "All"]] as [Rooms, string][]} />
+        <div className="seg" role="group" aria-label="Rooms">
+          <span className="seg-label">Rooms</span>
+          <div className="seg-track">
+            {(["3", "4", "5+"] as Room[]).map((r) => (
+              <button key={r} className={filters.rooms.includes(r) ? "on" : ""} aria-pressed={filters.rooms.includes(r)}
+                onClick={() => set("rooms", filters.rooms.includes(r) ? filters.rooms.filter((x) => x !== r) : [...filters.rooms, r].sort())}>
+                T{r}
+              </button>
+            ))}
+            <button className={filters.rooms.length === 0 ? "on" : ""} onClick={() => set("rooms", [])}>All</button>
+          </div>
+        </div>
         <Segmented label="To school" value={filters.commute} onChange={(v) => set("commute", v)}
           options={[[15, "15 min"], [20, "20 min"], [30, "30 min"], ["any", "Any"]] as [Commute, string][]} />
         {(data?.corridors?.length ?? 0) > 0 && (

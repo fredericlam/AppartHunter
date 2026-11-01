@@ -45,12 +45,13 @@ export interface Data {
   listings: Listing[];
 }
 
-export type Rooms = "3" | "4" | "5+" | "any";
+/** Room sizes to show (cumulative). Empty = all sizes. */
+export type Room = "3" | "4" | "5+";
 export type Commute = 15 | 20 | 30 | "any";
 export type Sort = "best" | "commute" | "price" | "newest";
 
 export interface Filters {
-  rooms: Rooms;
+  rooms: Room[];
   commute: Commute;
   lines: string[];          // corridor lines that also qualify (OR with the school commute)
   maxPrice: number | null;
@@ -62,7 +63,7 @@ export interface Filters {
 }
 
 export const DEFAULT_FILTERS: Filters = {
-  rooms: "4",
+  rooms: ["3", "4"],
   commute: 20,
   lines: ["Metro D", "Tram T4"],
   maxPrice: null,
