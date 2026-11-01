@@ -1,4 +1,3 @@
 node_modules/
 dist/
-public/listings.json
 *.tsbuildinfo

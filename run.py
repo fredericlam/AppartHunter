@@ -30,7 +30,7 @@ DROP_FIELDS = {"extra", "dup_of"}
 def load_cfg(path: str) -> dict:
     p = Path(path)
     if not p.exists():
-        sys.exit(f"{path} not found — run: cp config.example.yaml config.yaml  (then edit it)")
+        sys.exit(f"{path} not found")
     return yaml.safe_load(p.read_text())
 
 
@@ -44,9 +44,14 @@ def targets_of(cfg: dict) -> list[tuple[float, float]]:
     return out
 
 
-def export(cfg: dict, db: DB, targets, status: dict) -> None:
+def previous_export(cfg: dict) -> dict:
+    p = Path(cfg["output"]["json"])
+    return json.loads(p.read_text()) if p.exists() else {}
+
+
+def export(cfg: dict, db: DB, targets, status: dict, keep_previous_listings: bool = False) -> None:
     out_path = Path(cfg["output"]["json"])
-    previous = json.loads(out_path.read_text()) if out_path.exists() else {}
+    previous = previous_export(cfg)
     listings = []
     for l, first_seen, last_seen in db.current():
         if l.dup_of:
@@ -57,6 +62,8 @@ def export(cfg: dict, db: DB, targets, status: dict) -> None:
                  score_parts=l.extra.get("score_parts", {}))
         listings.append(d)
     listings.sort(key=lambda d: -d["score"])
+    if keep_previous_listings:  # a failed run must never wipe what the site shows
+        listings = previous.get("listings", [])
     doc = {
         "last_check": status.get("last_check") or previous.get("last_check"),
         "sources": status.get("sources") or previous.get("sources", {}),
@@ -93,11 +100,18 @@ def run(cfg: dict) -> None:
     pipeline.score(kept, cfg)
     print(f"{len(listings)} fetched → {len(kept)} match ({sum(1 for l in kept if l.dup_of)} cross-site duplicates)")
 
+    previous = previous_export(cfg)
     db = DB(cfg["output"]["db"])
-    new = db.upsert(kept)
+    new = db.upsert(kept, {l["key"]: l["first_seen"] for l in previous.get("listings", [])})
     print(f"{len(new)} new")
-    export(cfg, db, targets, {"last_check": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                              "sources": sources})
+    failed = not kept and any(not s["ok"] for s in sources.values())
+    if failed:
+        print("no listings and a source failed — keeping the previous listings")
+    export(cfg, db, targets, {"last_check": previous.get("last_check") if failed
+                              else datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                              "sources": sources}, keep_previous_listings=failed)
+    if failed:
+        sys.exit(1)  # make the scheduled job show as failed
 
 
 def main() -> None:

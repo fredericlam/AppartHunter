@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
 import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Rooms, type Sort } from "./types";
-import { ago, isNew, num, price, SOURCE_LABEL } from "./format";
+import { ago, isNew, listedAt, num, price, SOURCE_LABEL } from "./format";
 import { Bookmark, External, Eye, EyeOff, MapIcon, Refresh, Transit, Walk } from "./icons";
 
 type Marks = Record<string, "saved" | "hidden">;
@@ -37,7 +37,7 @@ const SORTS: Record<Sort, (a: Listing, b: Listing) => number> = {
   best: (a, b) => b.score - a.score,
   commute: (a, b) => (a.commute_min ?? 999) - (b.commute_min ?? 999),
   price: (a, b) => (a.price ?? 1e9) - (b.price ?? 1e9),
-  newest: (a, b) => (b.published || b.first_seen).localeCompare(a.published || a.first_seen),
+  newest: (a, b) => listedAt(b).localeCompare(listedAt(a)),
 };
 
 export default function App() {
@@ -112,9 +112,18 @@ export default function App() {
           <span className="muted" title={data?.last_check ? new Date(data.last_check).toLocaleString("fr-FR") : ""}>
             Last check {ago(data?.last_check ?? null)}
           </span>
-          <button className="btn ghost" onClick={refresh} disabled={refreshing}>
-            <Refresh spin={refreshing} /> {refreshing ? "Checking…" : "Check now"}
-          </button>
+          {import.meta.env.DEV ? (
+            <button className="btn ghost" onClick={refresh} disabled={refreshing}>
+              <Refresh spin={refreshing} /> {refreshing ? "Checking…" : "Check now"}
+            </button>
+          ) : import.meta.env.VITE_UPDATE_URL ? (
+            // Static hosting can't run the fetcher: open the GitHub workflow ("Run workflow").
+            // The site redeploys by itself a few minutes after it finishes.
+            <a className="btn ghost" href={import.meta.env.VITE_UPDATE_URL} target="_blank" rel="noreferrer"
+              title="Updates run automatically 4× a day. Opens GitHub → Run workflow.">
+              <Refresh /> Check now
+            </a>
+          ) : null}
           <button className={`btn ghost icon${mapOpen ? " on" : ""}`} onClick={() => setMapOpen((o) => !o)} title="Toggle map">
             <MapIcon />
           </button>
@@ -229,7 +238,7 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
         <div className="row">
           <div className="price">
             {price(l.price)}<span className="muted"> /month</span>
-            {l.charges ? <span className="muted small"> · incl. {l.charges} € charges</span> : null}
+            {l.charges ? <span className="muted small"> · incl. {num(l.charges)} € charges</span> : null}
           </div>
           <div className="actions">
             <button className={`icon-btn${mark === "saved" ? " on" : ""}`} title="Save" onClick={() => onToggle(l.key, "saved")}>
@@ -258,7 +267,7 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
           <span className="muted small">
             {SOURCE_LABEL[l.source] ?? l.source}
             {l.also_on.map((a) => <a key={a.url} href={a.url} target="_blank" rel="noreferrer"> · {SOURCE_LABEL[a.source] ?? a.source}</a>)}
-            {" · "}{ago(l.published || l.first_seen)}
+            {" · "}{ago(listedAt(l))}
           </span>
           <span className="score" title={Object.entries(l.score_parts).map(([k, v]) => `${k} ${Math.round(v * 100)}`).join("\n")}>
             {Math.round(l.score)}

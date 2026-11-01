@@ -12,6 +12,10 @@ export function ago(iso: string | null): string {
   return "just now";
 }
 
+/** Listing date: publication date when real, else when we first saw it. */
+export const listedAt = (l: { published: string; first_seen: string }) =>
+  l.published && !l.published.startsWith("1970") ? l.published : l.first_seen;
+
 export const isNew = (l: { first_seen: string }) => Date.now() - new Date(l.first_seen).getTime() < 36 * 3600 * 1000;
 
 export const SOURCE_LABEL: Record<string, string> = {

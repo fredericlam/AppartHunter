@@ -1,0 +1,22 @@
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Where the "Check now" button points in production (runs the GitHub workflow)
+  VITE_UPDATE_URL = "https://github.com/fredericlam/AppartHunter/actions/workflows/update-listings.yml"
+
+# Personal tool: keep it out of search engines
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Referrer-Policy = "no-referrer"
+
+# Data changes on every run: never let browsers cache it
+[[headers]]
+  for = "/listings.json"
+  [headers.values]
+    Cache-Control = "no-cache"
