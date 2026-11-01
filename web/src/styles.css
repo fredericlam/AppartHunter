@@ -179,3 +179,11 @@ a { color: inherit; text-decoration: none; }
   .card { grid-template-columns: 1fr; gap: 12px; }
   .status .muted { display: none; }
 }
+
+/* ---------- transit lines ---------- */
+.line-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0; background: var(--faint); }
+.line-dot.l-d { background: #2f9e5b; }
+.line-dot.l-t4 { background: #7c5cbf; }
+.chip.on .line-dot { box-shadow: 0 0 0 1.5px #fff; }
+.station { display: inline-flex; align-items: center; font-size: 13px; }
+.station .muted { margin-left: 4px; }

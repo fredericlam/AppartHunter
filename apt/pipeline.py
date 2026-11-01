@@ -10,7 +10,7 @@ from .models import Listing
 CENTROID_SLACK_MIN = 8  # arrondissement-level positions are fuzzy: be lenient
 
 
-def locate(listings: list[Listing], targets: list[tuple[float, float]]) -> None:
+def locate(listings: list[Listing], targets: list[tuple[float, float]], corridors: list[dict] = ()) -> None:
     """Position each listing, then compute distance/commute to the *farthest* target
     (every child must be able to get to school)."""
     for l in listings:
@@ -24,6 +24,19 @@ def locate(listings: list[Listing], targets: list[tuple[float, float]]) -> None:
         if l.lat is not None:
             l.distance_km = round(max(geo.haversine_km(t, (l.lat, l.lon)) for t in targets), 2)
             l.commute_min, l.commute_mode = geo.commute(l.distance_km)
+        l.near = near_stations(l, corridors) if l.location_precise else []
+
+
+def near_stations(l: Listing, corridors) -> list[dict]:
+    """Closest stop of each corridor line, if within its walking limit (precise positions only:
+    an arrondissement centroid can't tell whether a flat is 5 min from a station)."""
+    out = []
+    for c in corridors:
+        best = min(((geo.haversine_km((l.lat, l.lon), (s["lat"], s["lon"])), s["name"]) for s in c["stops"]),
+                   default=None)
+        if best and geo.walk_minutes(best[0]) <= c.get("walk_minutes", 5):
+            out.append({"line": c["name"], "stop": best[1], "walk_min": max(1, geo.walk_minutes(best[0]))})
+    return out
 
 
 RE_COLOC = re.compile(r"\bcolocation\b|\bcoloc\b|chambre (?:dans|en) (?:une )?coloc", re.I)
@@ -64,7 +77,7 @@ def keep(l: Listing, s: dict, max_minutes: int) -> bool:
         return False
     if s.get("garage") == "required" and not l.garage:
         return False
-    if l.commute_min is not None:
+    if l.commute_min is not None and not l.near:  # near a corridor station = always in scope
         slack = 0 if l.location_precise else CENTROID_SLACK_MIN
         if l.commute_min > max_minutes + slack:
             return False

@@ -22,6 +22,7 @@ export interface Listing {
   distance_km: number | null;
   commute_min: number | null;
   commute_mode: "walk" | "transit" | "";
+  near: { line: string; stop: string; walk_min: number }[];
   score: number;
   first_seen: string;
   last_seen: string;
@@ -32,12 +33,14 @@ export interface Listing {
 }
 
 export interface Target { name: string; lat: number; lon: number }
+export interface Corridor { name: string; walk_minutes: number; stops: Target[] }
 
 export interface Data {
   last_check: string | null;
   sources: Record<string, { ok: boolean; count?: number; error?: string }>;
   targets: Target[];
   commute: { ideal_minutes: number; max_minutes: number };
+  corridors?: Corridor[];
   listings: Listing[];
 }
 
@@ -48,6 +51,7 @@ export type Sort = "best" | "commute" | "price" | "newest";
 export interface Filters {
   rooms: Rooms;
   commute: Commute;
+  lines: string[];          // corridor lines that also qualify (OR with the school commute)
   maxPrice: number | null;
   parking: boolean;
   garage: boolean;
@@ -59,6 +63,7 @@ export interface Filters {
 export const DEFAULT_FILTERS: Filters = {
   rooms: "4",
   commute: 20,
+  lines: ["Metro D", "Tram T4"],
   maxPrice: null,
   parking: false,
   garage: false,

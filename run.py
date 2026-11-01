@@ -69,6 +69,7 @@ def export(cfg: dict, db: DB, targets, status: dict, keep_previous_listings: boo
         "sources": status.get("sources") or previous.get("sources", {}),
         "targets": [{"name": t["name"], "lat": p[0], "lon": p[1]} for t, p in zip(cfg["targets"], targets)],
         "commute": cfg["commute"],
+        "corridors": cfg.get("corridors") or [],
         "listings": listings,
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -92,7 +93,7 @@ def run(cfg: dict) -> None:
             print(f"  [{name}] FAILED: {e}")
             sources[name] = {"ok": False, "error": str(e)[:200]}
 
-    pipeline.locate(listings, targets)
+    pipeline.locate(listings, targets, cfg.get("corridors") or [])
     for l in listings:
         pipeline.enrich_from_text(l)
     kept = [l for l in listings if pipeline.keep(l, cfg["search"], cfg["commute"]["max_minutes"])]

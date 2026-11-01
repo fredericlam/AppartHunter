@@ -31,6 +31,7 @@ class Listing:
     distance_km: float | None = None   # straight line to the farthest target
     commute_min: int | None = None     # estimated door-to-door minutes to the farthest target
     commute_mode: str = ""             # "walk" | "transit"
+    near: list = field(default_factory=list)  # [{"line": "Metro D", "stop": "Sans Souci", "walk_min": 3}]
     score: float = 0.0
     dup_of: str | None = None
     extra: dict = field(default_factory=dict)

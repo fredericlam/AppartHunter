@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import type { Listing, Target } from "./types";
+import type { Corridor, Listing, Target } from "./types";
 import { num } from "./format";
 
 interface Props {
   listings: Listing[];
   targets: Target[];
   idealMinutes: number;
+  corridors: Corridor[];
   activeKey: string | null;
   onSelect: (key: string) => void;
 }
@@ -15,7 +16,9 @@ interface Props {
 // ~20 min walk ≈ 1.23 km straight line (see apt/geo.py)
 const walkRadiusM = (minutes: number) => (minutes / 60) * 4.8 / 1.3 * 1000;
 
-export default function MapView({ listings, targets, idealMinutes, activeKey, onSelect }: Props) {
+const LINE_COLOR = (name: string) => (name.includes("T4") ? "#7c5cbf" : "#2f9e5b");
+
+export default function MapView({ listings, targets, idealMinutes, corridors, activeKey, onSelect }: Props) {
   const el = useRef<HTMLDivElement>(null);
   const map = useRef<L.Map | null>(null);
   const layer = useRef<L.LayerGroup | null>(null);
@@ -55,6 +58,23 @@ export default function MapView({ listings, targets, idealMinutes, activeKey, on
     }
     return () => { g.remove(); };
   }, [targets, idealMinutes]);
+
+  // corridors: line + stops + walking radius
+  useEffect(() => {
+    const m = map.current;
+    if (!m) return;
+    const g = L.layerGroup().addTo(m);
+    for (const c of corridors) {
+      const color = LINE_COLOR(c.name);
+      L.polyline(c.stops.map((s) => [s.lat, s.lon] as L.LatLngTuple), { color, weight: 2, opacity: 0.5, interactive: false }).addTo(g);
+      for (const s of c.stops) {
+        L.circle([s.lat, s.lon], { radius: walkRadiusM(c.walk_minutes), color, weight: 0, fillOpacity: 0.07, interactive: false }).addTo(g);
+        L.circleMarker([s.lat, s.lon], { radius: 4, color: "#fff", weight: 2, fillColor: color, fillOpacity: 1 })
+          .bindTooltip(`${c.name} · ${s.name}`, { direction: "top", offset: [0, -4] }).addTo(g);
+      }
+    }
+    return () => { g.remove(); };
+  }, [corridors]);
 
   // listing markers
   useEffect(() => {

@@ -25,7 +25,11 @@ function matches(l: Listing, f: Filters, marks: Marks, showHidden: boolean) {
     if (l.rooms == null) return false;
     if (f.rooms === "5+" ? l.rooms < 5 : l.rooms !== Number(f.rooms)) return false;
   }
-  if (f.commute !== "any" && (l.commute_min == null || l.commute_min > f.commute)) return false;
+  if (f.commute !== "any") {
+    const nearSchool = l.commute_min != null && l.commute_min <= f.commute;
+    const nearLine = (l.near ?? []).some((n) => f.lines.includes(n.line));
+    if (!nearSchool && !nearLine) return false;
+  }
   if (f.maxPrice && l.price && l.price > f.maxPrice) return false;
   if (f.parking && !l.parking) return false;
   if (f.garage && !l.garage) return false;
@@ -135,6 +139,18 @@ export default function App() {
           options={[["3", "T3"], ["4", "T4"], ["5+", "T5+"], ["any", "All"]] as [Rooms, string][]} />
         <Segmented label="To school" value={filters.commute} onChange={(v) => set("commute", v)}
           options={[[15, "15 min"], [20, "20 min"], [30, "30 min"], ["any", "Any"]] as [Commute, string][]} />
+        {(data?.corridors?.length ?? 0) > 0 && (
+          <div className="seg">
+            <span className="seg-label">or 5 min from</span>
+            {data!.corridors!.map((c) => (
+              <Chip key={c.name} on={filters.lines.includes(c.name)} line={c.name}
+                onClick={() => set("lines", filters.lines.includes(c.name)
+                  ? filters.lines.filter((x) => x !== c.name) : [...filters.lines, c.name])}>
+                {c.name}
+              </Chip>
+            ))}
+          </div>
+        )}
         <label className="field">
           <span>Max</span>
           <input type="number" inputMode="numeric" step={50} placeholder="—" value={filters.maxPrice ?? ""}
@@ -186,6 +202,7 @@ export default function App() {
         {mapOpen && data && (
           <aside className="mapwrap">
             <MapView listings={visible} targets={data.targets} idealMinutes={data.commute.ideal_minutes}
+              corridors={data.corridors ?? []}
               activeKey={active} onSelect={select} />
           </aside>
         )}
@@ -208,8 +225,15 @@ function Segmented<T extends string | number>({ label, value, options, onChange 
   );
 }
 
-function Chip({ on, onClick, children }: { on: boolean; onClick: () => void; children: React.ReactNode }) {
-  return <button className={`chip${on ? " on" : ""}`} onClick={onClick} aria-pressed={on}>{children}</button>;
+export const lineClass = (line: string) => (line.includes("T4") ? "l-t4" : line.includes("D") ? "l-d" : "");
+
+function Chip({ on, onClick, children, line }:
+  { on: boolean; onClick: () => void; children: React.ReactNode; line?: string }) {
+  return (
+    <button className={`chip${on ? " on" : ""}`} onClick={onClick} aria-pressed={on}>
+      {line && <span className={`line-dot ${lineClass(line)}`} />}{children}
+    </button>
+  );
 }
 
 function Card({ l, mark, active, ideal, onHover, onToggle }: {
@@ -260,6 +284,16 @@ function Card({ l, mark, active, ideal, onHover, onToggle }: {
           ) : <span className="muted">location unknown</span>}
           <span className="muted">{[l.city, l.postal_code].filter(Boolean).join(" ")}</span>
         </div>
+        {(l.near ?? []).length > 0 && (
+          <div className="where">
+            {l.near.map((n) => (
+              <span key={n.line} className="station">
+                <span className={`line-dot ${lineClass(n.line)}`} />
+                {n.stop} <span className="muted">· {n.walk_min} min walk</span>
+              </span>
+            ))}
+          </div>
+        )}
         <div className="foot">
           {l.garage ? <span className="tag">Garage</span> : l.parking ? <span className="tag">Parking</span> : null}
           {l.price_per_m2 && <span className="muted small">{l.price_per_m2.toFixed(1).replace(".", ",")} €/m²</span>}

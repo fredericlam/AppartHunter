@@ -58,7 +58,7 @@ def to_listing(a: dict) -> Listing:
         postal_code=a.get("postalCode") or "",
         lat=pos.get("lat"),
         lon=pos.get("lon"),
-        location_precise=bool(pos) and (a.get("blurInfo") or {}).get("radius", 999) <= 300,
+        location_precise=bool(pos) and (a.get("blurInfo") or {}).get("radius", 999) <= 150,
         published="" if (a.get("publicationDate") or "1970").startswith("1970") else a["publicationDate"],
         dpe=(a.get("energyClassification") or "").upper(),
         furnished=a.get("isFurnished"),

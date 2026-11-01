@@ -1,4 +1,4 @@
-# Copy to config.yaml and edit.
+# AppartHunter settings (no secrets here: the e-mail password comes from an env var / GitHub secret).
 
 # Places to live close to. The commute is computed to the FARTHEST one, so if your
 # daughters go to different sites, list both. Remove the one you don't need.
@@ -9,6 +9,28 @@ targets:
     lon: 4.85889
   # - name: "Chevreul Lestonnac — site rue Chevreul"
   #   address: "7 rue Chevreul 69007 Lyon"
+
+# Also keep flats a short walk from these stations (positions from OpenStreetMap).
+corridors:
+  - name: "Metro D"
+    # Garibaldi → Grange Blanche
+    walk_minutes: 5
+    stops:
+      - {name: "Garibaldi", lat: 45.751622, lon: 4.853488}
+      - {name: "Sans Souci", lat: 45.747584, lon: 4.865247}
+      - {name: "Monplaisir - Lumière", lat: 45.745521, lon: 4.871377}
+      - {name: "Grange Blanche", lat: 45.742997, lon: 4.87888}
+  - name: "Tram T4"
+    # ≈ 10 min ride from school: Lycée Colbert → Charpennes (nothing south: no Jet d'eau)
+    walk_minutes: 5
+    stops:
+      - {name: "Lycée Colbert", lat: 45.745681, lon: 4.85908}
+      - {name: "Manufacture Montluc", lat: 45.750176, lon: 4.860378}
+      - {name: "Archives Départementales", lat: 45.754363, lon: 4.861825}
+      - {name: "Gare Part-Dieu - Villette", lat: 45.76078, lon: 4.861982}
+      - {name: "Thiers - Lafayette", lat: 45.76433, lon: 4.862073}
+      - {name: "Collège Bellecombe", lat: 45.766696, lon: 4.861965}
+      - {name: "Charpennes - Charles Hernu", lat: 45.77095, lon: 4.863054}
 
 commute:
   ideal_minutes: 20   # walk or public transport: listings within this rank first
