@@ -20,7 +20,9 @@ export interface Listing {
   garage: boolean | null;
   colocation?: boolean;
   bathrooms?: number | null;
-  features?: string[];   // "ac" | "cellar" | "kitchen" | "terrace" | "balcony" | "lift" | "baths2"
+  features?: string[];
+  favorite?: boolean;    // saved by you on SeLoger / Leboncoin
+  note?: string;   // "ac" | "cellar" | "kitchen" | "terrace" | "balcony" | "lift" | "baths2"
   photo: string;
   description: string;
   distance_km: number | null;

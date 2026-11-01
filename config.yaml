@@ -58,6 +58,9 @@ scoring:
   freshness: 1
 
 sources:
+  favorites:
+    enabled: true
+    file: favorites.json      # your SeLoger / Leboncoin favourites, copied from your browser
   bienici:
     enabled: true
     max_pages: 12             # 50 listings/page, newest first

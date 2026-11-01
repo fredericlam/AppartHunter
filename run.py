@@ -21,9 +21,9 @@ import yaml
 
 from apt import geo, pipeline
 from apt.db import DB
-from apt.sources import bienici, email_alerts
+from apt.sources import bienici, email_alerts, favorites
 
-SOURCES = {"bienici": bienici.fetch, "email_alerts": email_alerts.fetch}
+SOURCES = {"bienici": bienici.fetch, "favorites": favorites.fetch, "email_alerts": email_alerts.fetch}
 DROP_FIELDS = {"extra", "dup_of"}
 
 

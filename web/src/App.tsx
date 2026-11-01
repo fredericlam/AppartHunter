@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapView from "./MapView";
 import { DEFAULT_FILTERS, type Commute, type Data, type Filters, type Listing, type Room, type Sort, type Target } from "./types";
 import { ago, date, daysSince, duration, isNew, listedAt, num, price, realDate, shortDate, SOURCE_LABEL } from "./format";
-import { Balcony, Bath, Cellar, Kitchen, Lift, Snow, Sun, Users } from "./icons";
+import { Balcony, Bath, Cellar, Heart, Kitchen, Lift, Snow, Sun, Users } from "./icons";
 import { Area, Bed, Bookmark, Calendar, Car, Door, Euro, External, Eye, EyeOff, MapIcon, Parking, Pin, Refresh, Route, Sofa, Stairs, Transit, Walk } from "./icons";
 import { PALETTES, type PaletteId, useTheme } from "./theme";
 
@@ -24,6 +24,7 @@ function matches(l: Listing, f: Filters, marks: Marks, showHidden: boolean) {
   if (marks[l.key] === "hidden" && !showHidden) return false;
   if (f.onlySaved && marks[l.key] !== "saved") return false;
   if (!f.flatshares && l.colocation) return false;
+  if (l.favorite) return true; // your own favourites ignore the other filters
   if (f.rooms.length) {
     const size = roomKey(l.rooms);
     if (!size || !f.rooms.includes(size)) return false;
@@ -396,9 +397,15 @@ const FEATURES: Record<string, [React.ReactNode, string]> = {
 
 function Tags({ l }: { l: Listing }) {
   const feats = (l.features ?? []).filter((f) => f in FEATURES);
-  if (!l.colocation && !l.garage && !l.parking && feats.length === 0) return null;
+  if (!l.favorite && !l.colocation && !l.garage && !l.parking && feats.length === 0) return null;
+  const favOn = l.also_on.find((a) => a.source !== "bienici")?.source ?? (l.source !== "bienici" ? l.source : "");
   return (
     <div className="tags">
+      {l.favorite && (
+        <span className="tag fav">
+          <Heart />Your {SOURCE_LABEL[favOn] ?? ""} favourite{l.note ? ` · ${l.note}` : ""}
+        </span>
+      )}
       {l.colocation && (
         <span className="tag coloc" title="Listed as a flatshare: the price is often per room. Ask the agency whether you can rent the whole flat.">
           <Users />Flatshare · ask for whole flat

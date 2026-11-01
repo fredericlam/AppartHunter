@@ -27,7 +27,9 @@ class Listing:
     garage: bool | None = None    # closed garage / box
     colocation: bool = False
     bathrooms: int | None = None  # bathrooms + shower rooms
-    features: list = field(default_factory=list)  # "ac", "cellar", "kitchen", "terrace", "balcony", "lift", "baths2"
+    features: list = field(default_factory=list)
+    favorite: bool = False      # saved by you on SeLoger / Leboncoin (favorites.json)
+    note: str = ""  # "ac", "cellar", "kitchen", "terrace", "balcony", "lift", "baths2"
     photo: str = ""
     description: str = ""
     # computed

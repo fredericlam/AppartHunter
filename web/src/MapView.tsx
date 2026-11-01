@@ -3,6 +3,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Corridor, Listing, Target } from "./types";
 import { num } from "./format";
+import { HEART_SVG, SCHOOL_SVG } from "./icons";
 
 interface Props {
   listings: Listing[];
@@ -62,10 +63,16 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
     for (const t of targets) {
       L.circle([t.lat, t.lon], { radius: walkRadiusM(idealMinutes), color: accent, weight: 1.2,
         dashArray: "3 5", fill: true, fillOpacity: 0.06, interactive: false }).addTo(g);
+      const label = t.name.split("—")[0].trim();
       L.marker([t.lat, t.lon], {
-        icon: L.divIcon({ className: "", html: `<div class="pin-school" title="${t.name}"></div>`, iconSize: [14, 14] }),
-        zIndexOffset: 1000,
-      }).bindTooltip(t.name, { direction: "top", offset: [0, -8] }).addTo(g);
+        icon: L.divIcon({
+          className: "",
+          html: `<div class="school"><span class="school-icon">${SCHOOL_SVG}</span><span class="school-label">${label}</span></div>`,
+          iconSize: null as unknown as L.PointExpression,
+        }),
+        zIndexOffset: 2000,
+        keyboard: false,
+      }).bindTooltip(t.name, { direction: "top", offset: [0, -24] }).addTo(g);
     }
     return () => { g.remove(); };
   }, [targets, idealMinutes, accent]);
@@ -99,10 +106,11 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
       const mk = L.marker([l.lat, l.lon], {
         icon: L.divIcon({
           className: "",
-          html: `<div class="pin${l.location_precise ? "" : " approx"}">${num(l.price)}</div>`,
+          html: `<div class="pin${l.location_precise ? "" : " approx"}${l.favorite ? " fav" : ""}">${l.favorite ? HEART_SVG : ""}${num(l.price)}</div>`,
           iconSize: null as unknown as L.PointExpression, // size from CSS
         }),
         riseOnHover: true,
+        zIndexOffset: l.favorite ? 1500 : 0,
       }).on("click", () => onSelect(l.key));
       mk.addTo(lg);
       markers.current.set(l.key, mk);
@@ -120,7 +128,8 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
     markers.current.forEach((mk, key) => {
       const node = mk.getElement()?.firstElementChild;
       node?.classList.toggle("active", key === activeKey);
-      mk.setZIndexOffset(key === activeKey ? 900 : 0);
+      const fav = listings.find((l) => l.key === key)?.favorite;
+      mk.setZIndexOffset(key === activeKey ? 1800 : fav ? 1500 : 0);
     });
   }, [activeKey, listings]);
 

@@ -78,6 +78,8 @@ def enrich_from_text(l: Listing) -> None:
 
 
 def keep(l: Listing, s: dict, max_minutes: int) -> bool:
+    if l.favorite:  # your own picks always stay
+        return True
     if l.colocation:  # flatshares: only big enough flats (the whole flat may be negotiable)
         min_rooms = s.get("colocation_min_rooms")
         if min_rooms is None or (l.rooms or 0) < min_rooms:
@@ -101,6 +103,18 @@ def keep(l: Listing, s: dict, max_minutes: int) -> bool:
     return True
 
 
+def _same_place(a: Listing, b: Listing) -> bool:
+    """Could these two ads be the same flat? Postcode must agree, positions be close, floors match."""
+    if a.postal_code and b.postal_code and a.postal_code != b.postal_code:
+        return False
+    if a.floor is not None and b.floor is not None and a.floor != b.floor:
+        return False
+    if a.lat is not None and b.lat is not None:
+        limit = 0.3 if (a.location_precise and b.location_precise) else 1.0  # km
+        return geo.haversine_km((a.lat, a.lon), (b.lat, b.lon)) <= limit
+    return bool(a.postal_code) and a.postal_code == b.postal_code
+
+
 def dedupe(listings: list[Listing]) -> None:
     """Mark the same flat posted on several sites. Precise-location listings win as 'primary'."""
     ordered = sorted(listings, key=lambda l: (not l.location_precise, -len(l.description)))
@@ -109,12 +123,12 @@ def dedupe(listings: list[Listing]) -> None:
         for p in primaries:
             if p.source == l.source or not (l.price and p.price and l.surface and p.surface):
                 continue
-            same_area = (l.postal_code and l.postal_code == p.postal_code) or (
-                l.distance_km is not None and p.distance_km is not None
-                and abs(l.distance_km - p.distance_km) < 0.6)
-            if same_area and abs(l.price - p.price) <= 0.03 * p.price and abs(l.surface - p.surface) <= 1.5:
+            if _same_place(l, p) and abs(l.price - p.price) <= 0.03 * p.price and abs(l.surface - p.surface) <= 1.5:
                 l.dup_of = p.key
                 p.extra.setdefault("also_on", []).append({"source": l.source, "url": l.url})
+                if l.favorite:  # your favourite, found with better data elsewhere: keep the mark
+                    p.favorite, p.note = True, p.note or l.note
+                    p.photo = p.photo or l.photo
                 break
         else:
             primaries.append(l)
