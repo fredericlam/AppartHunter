@@ -1,0 +1,1293 @@
+{
+ "2589831E4X74": {
+  "gone": true
+ },
+ "25U32KF4V5ZQ": {
+  "address": "16 RUE DE LA FRATERNITE",
+  "desc": "Adresse : 16 RUE DE LA FRATERNITE.\nMentionné dans l'annonce : balcon.",
+  "features": [
+   "Rez-de-chaussée",
+   "Kitchenette",
+   "Pas d'ascenseur",
+   "Balcon",
+   "Meublé",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de bain"
+  ],
+  "created": "2025-03-05",
+  "updated": "2026-08-11"
+ },
+ "2611VIZCJT35": {
+  "address": "15 rue de l'Espérance",
+  "desc": "Adresse : 15 rue de l'Espérance.\nMentionné dans l'annonce : balcon.",
+  "features": [
+   "4ème Étage",
+   "Ascenseur",
+   "Pas de cave",
+   "1 WC",
+   "Balcon",
+   "Non meublé",
+   "3 Chambres",
+   "1 Salle de douche"
+  ],
+  "created": "2026-09-29",
+  "updated": "2026-10-08"
+ },
+ "261LJ3R8RHYW": {
+  "address": "4 RUE MAURICE FLANDIN",
+  "desc": "Adresse : 4 RUE MAURICE FLANDIN.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "Étage 4ème / 6",
+   "Cuisine ouverte",
+   "Ascenseur",
+   "Pas de cave",
+   "2 Boxs de stationnement",
+   "1 WC",
+   "Balcon",
+   "Calme"
+  ],
+  "created": "2026-10-05",
+  "updated": "2026-10-30"
+ },
+ "262CQZZ9XVYB": {
+  "address": "1 rue de l'Espérance",
+  "desc": "Adresse : 1 rue de l'Espérance.",
+  "features": [
+   "Rez-de-chaussée / 5 étages",
+   "Cuisine intégrée",
+   "1 WC",
+   "Meublé",
+   "2 Chambres",
+   "1 Salle de douche",
+   "Entrée séparée",
+   "Placard"
+  ],
+  "created": "2026-03-27",
+  "updated": "2026-10-07"
+ },
+ "262K9SK8AB2P": {
+  "address": "rue Sainte Anne de Baraban",
+  "desc": "Adresse : rue Sainte Anne de Baraban.\nMentionné dans l'annonce : balcon, garage.",
+  "features": [
+   "Rez-de-chaussée / 4 étages",
+   "Cuisine ouverte",
+   "Ascenseur",
+   "Pas de cave",
+   "Garage",
+   "WC dans la salle de bains",
+   "Pas de balcon",
+   "Terrasse"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-10-30"
+ },
+ "263CD1ZJM9L8": {
+  "address": "91 rue Marius Berliet",
+  "desc": "Adresse : 91 rue Marius Berliet.\nMentionné dans l'annonce : balcon.",
+  "features": [
+   "3ème Étage",
+   "Cuisine intégrée",
+   "Balcon",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain",
+   "Colocation possible",
+   "Placard"
+  ],
+  "created": "2026-09-30",
+  "updated": "2026-10-31"
+ },
+ "263G6NK2CK6N": {
+  "address": "Rue des Balançoires",
+  "desc": "Adresse : Rue des Balançoires.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "Étage 6ème / 12",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Garage",
+   "1 WC",
+   "Balcon",
+   "Calme",
+   "2 Chambres"
+  ],
+  "created": "2026-10-23",
+  "updated": "2026-10-24"
+ },
+ "263HY5G2TFD4": {
+  "address": "40 rue du Rhône",
+  "desc": "Adresse : 40 rue du Rhône.\nMentionné dans l'annonce : balcon, parking.",
+  "features": [
+   "Disponible immédiatement",
+   "Étage 6ème / 7",
+   "Cuisine ouverte, Cuisine intégrée",
+   "Parking",
+   "1 WC séparées",
+   "Balcon",
+   "Meublé",
+   "3 Chambres"
+  ],
+  "created": "2026-10-15",
+  "updated": "2026-11-02"
+ },
+ "2653HKH2NNMG": {
+  "address": "22 Rue Du Lieutenant-Colonel Girard",
+  "desc": "Adresse : 22 Rue Du Lieutenant-Colonel Girard.\nMentionné dans l'annonce : ascenseur.",
+  "features": [
+   "Disponible à partir du 01/01/2027",
+   "1er Étage",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain",
+   "Colocation possible"
+  ],
+  "created": "2026-10-28",
+  "updated": "2026-10-28"
+ },
+ "265CTZRDWVAQ": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, terrasse, balcon, parking.",
+  "features": [
+   "Cuisine intégrée",
+   "Pas d'ascenseur",
+   "Cave",
+   "Balcon",
+   "Terrasse",
+   "Sans vis-à-vis",
+   "Meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-10-23",
+  "updated": "2026-11-02"
+ },
+ "265VLEKWZQ1F": {
+  "address": "Avenue Félix Faure",
+  "desc": "Adresse : Avenue Félix Faure.\nMentionné dans l'annonce : garage.",
+  "features": [
+   "Disponible à partir du 07/11/2026",
+   "4ème Étage",
+   "Cuisine ouverte, Cuisine intégrée",
+   "Ascenseur",
+   "Box de stationnement",
+   "1 WC séparées",
+   "Balcon",
+   "Non meublé"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-11-02"
+ },
+ "2661XC1CA5MZ": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "5ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-11-02"
+ },
+ "2666FN6JH9V7": {
+  "address": "13 avenue Georges Pompidou",
+  "desc": "Adresse : 13 avenue Georges Pompidou.\nMentionné dans l'annonce : cave, balcon, parking.",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "Étage 1er / 6",
+   "Animaux domestiques sur demande",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Cave",
+   "place de stationnement",
+   "Balcon (Total 2 m²)"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-10-30"
+ },
+ "2675W7Z9BT9F": {
+  "address": "14 Boulevard Jean XXIII",
+  "desc": "Adresse : 14 Boulevard Jean XXIII.\nMentionné dans l'annonce : terrasse, garage, ascenseur.",
+  "features": [
+   "Étage 4ème / 5",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Terrasse",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-09-22",
+  "updated": "2026-10-14"
+ },
+ "267LADSBENM3": {
+  "address": "7 Rue Carry",
+  "desc": "Adresse : 7 Rue Carry.\nMentionné dans l'annonce : parking, ascenseur.",
+  "features": [
+   "Étage 1er / 5",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Parking",
+   "Pas de balcon",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-10-27"
+ },
+ "268EEMUUC1JH": {
+  "address": "8 Rue Chantal Sandrin",
+  "desc": "Adresse : 8 Rue Chantal Sandrin.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "Dernier étage, Étage 4ème / 4",
+   "Cuisine séparée",
+   "Ascenseur",
+   "803750001 Boxs de stationnement",
+   "Pas de balcon",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-09-16",
+  "updated": "2026-10-26"
+ },
+ "269KMFZGINGF": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : parking.",
+  "features": [
+   "Cuisine équipée, Cuisine séparée",
+   "Ascenseur",
+   "Balcon",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain",
+   "Digicode",
+   "Entrée séparée"
+  ],
+  "created": "2026-10-13",
+  "updated": "2026-10-28"
+ },
+ "269KVXA145R6": {
+  "address": "RUE GUSTAVE NADAUD",
+  "desc": "Adresse : RUE GUSTAVE NADAUD.\nMentionné dans l'annonce : cave, balcon, parking, ascenseur.",
+  "features": [
+   "3ème Étage",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Cave",
+   "Parking",
+   "Balcon",
+   "Non meublé",
+   "3 Chambres"
+  ],
+  "created": "2026-09-30",
+  "updated": "2026-09-30"
+ },
+ "269T1YEUEZEB": {
+  "address": "11 RUE MONTBRILLANT",
+  "desc": "Adresse : 11 RUE MONTBRILLANT.\nMentionné dans l'annonce : cave, parking.",
+  "features": [
+   "1er Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Pas de cave",
+   "Parking",
+   "Non meublé",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite"
+  ],
+  "created": "2026-10-06",
+  "updated": "2026-10-31"
+ },
+ "26AJM5TY31WY": {
+  "address": "3 rue Saint Antoine",
+  "desc": "Adresse : 3 rue Saint Antoine.\nMentionné dans l'annonce : cave, ascenseur.",
+  "features": [
+   "2ème Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Cave",
+   "1 WC séparées",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-09-10",
+  "updated": "2026-10-26"
+ },
+ "26AZSRKM7DV4": {
+  "address": "14 rue Carry",
+  "desc": "Adresse : 14 rue Carry.\nMentionné dans l'annonce : cave, garage, ascenseur.",
+  "features": [
+   "Rez-de-chaussée / 5 étages",
+   "Cuisine séparée, Cuisine intégrée",
+   "Ascenseur",
+   "Cave",
+   "Box de stationnement",
+   "1 WC séparées",
+   "Pas de balcon",
+   "Non meublé"
+  ],
+  "created": "2026-10-29",
+  "updated": "2026-10-29"
+ },
+ "26B7ABD5GW2C": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : balcon.",
+  "features": [
+   "Ascenseur",
+   "1 WC",
+   "Balcon",
+   "Calme",
+   "Belle vue",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-21",
+  "updated": "2026-10-26"
+ },
+ "26BGWTMELFED": {
+  "address": "rue Sainte Anne de Baraban",
+  "desc": "Adresse : rue Sainte Anne de Baraban.\nMentionné dans l'annonce : balcon.",
+  "features": [
+   "Rez-de-chaussée",
+   "Cuisine séparée",
+   "Ascenseur",
+   "1 WC",
+   "Balcon",
+   "Meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-20",
+  "updated": "2026-10-28"
+ },
+ "26C7VEQM15XK": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "1er Étage",
+   "Cuisine intégrée",
+   "WC séparées",
+   "Meublé",
+   "3 Chambres",
+   "Colocation possible"
+  ],
+  "created": "2026-10-18",
+  "updated": "2026-10-20"
+ },
+ "26CZ15Y38LWZ": {
+  "address": "17 rue Clos Suiphon",
+  "desc": "Adresse : 17 rue Clos Suiphon.\nMentionné dans l'annonce : cave, balcon, ascenseur.",
+  "features": [
+   "4ème Étage",
+   "Kitchenette",
+   "Ascenseur",
+   "Cave",
+   "1 WC",
+   "Balcon",
+   "Meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-09-29",
+  "updated": "2026-10-19"
+ },
+ "26DHMD2X2PBQ": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : ascenseur.",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "6ème Étage",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-11-02"
+ },
+ "26F6WXLV6AAE": {
+  "address": "4 rue Audibert et Lavirotte",
+  "desc": "Adresse : 4 rue Audibert et Lavirotte.\nMentionné dans l'annonce : terrasse, garage, ascenseur.",
+  "features": [
+   "4ème Étage",
+   "Ascenseur",
+   "Garage",
+   "WC dans la salle de bains",
+   "Terrasse",
+   "Meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-07-15",
+  "updated": "2026-10-22"
+ },
+ "26F9KVVDSFCB": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "5ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "4 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-14",
+  "updated": "2026-11-02"
+ },
+ "26FHERDZZ7B7": {
+  "address": "265 RUE DUGUESCLIN",
+  "desc": "Adresse : 265 RUE DUGUESCLIN.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "2ème Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Pas de cave",
+   "Garage",
+   "Balcon",
+   "Meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-10-26",
+  "updated": "2026-10-26"
+ },
+ "26FSG1SJAXXT": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : climatisation, balcon, garage.",
+  "features": [
+   "Étage 1er / 8",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Garage",
+   "1 WC",
+   "Balcon",
+   "Calme",
+   "Non meublé"
+  ],
+  "created": "2026-10-06",
+  "updated": "2026-10-08"
+ },
+ "26FW4F4QTQ3J": {
+  "address": "Rue du Rhône",
+  "desc": "Adresse : Rue du Rhône.\nMentionné dans l'annonce : terrasse.",
+  "features": [
+   "4ème Étage",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Balcon",
+   "Terrasse",
+   "Calme",
+   "Non meublé",
+   "3 Chambres"
+  ],
+  "created": "2026-10-05",
+  "updated": "2026-10-07"
+ },
+ "26GE8E47KYFI": {
+  "address": "Rue du Docteur Rebatel",
+  "desc": "Adresse : Rue du Docteur Rebatel.",
+  "features": [
+   "Étage 4ème / 5",
+   "Cuisine séparée",
+   "Pas d'ascenseur",
+   "Sans vis-à-vis",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-07-21",
+  "updated": "2026-10-08"
+ },
+ "26GSUISTE7QN": {
+  "address": "61 Avenue des Frères Lumières",
+  "desc": "Adresse : 61 Avenue des Frères Lumières.\nMentionné dans l'annonce : climatisation.",
+  "features": [
+   "2ème Étage",
+   "Cuisine équipée",
+   "1 WC",
+   "Meublé",
+   "2 Chambres",
+   "1 Salle de bain",
+   "1 Salle de douche"
+  ],
+  "created": "2026-09-30",
+  "updated": "2026-10-08"
+ },
+ "26GXWIC9LFDS": {
+  "address": "8 rue des Alouettes",
+  "desc": "Adresse : 8 rue des Alouettes.\nMentionné dans l'annonce : cave, terrasse, garage.",
+  "features": [
+   "2ème Étage",
+   "Cuisine équipée, Cuisine ouverte",
+   "Ascenseur",
+   "Cave",
+   "Garage",
+   "Pas de balcon",
+   "Terrasse",
+   "Non meublé"
+  ],
+  "created": "2026-09-22",
+  "updated": "2026-10-14"
+ },
+ "26I684SU3ZDK": {
+  "address": "8 rue Chantal Sandrin",
+  "desc": "Adresse : 8 rue Chantal Sandrin.\nMentionné dans l'annonce : terrasse, garage, ascenseur.",
+  "features": [
+   "4ème Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Garage",
+   "1 WC",
+   "Pas de balcon",
+   "Terrasse (Total 26 m²)"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-10-28"
+ },
+ "26ITQS247I8X": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, balcon, parking, ascenseur.",
+  "features": [
+   "5ème Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Cave",
+   "Parking",
+   "Balcon",
+   "Non meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-10-30"
+ },
+ "26J8K3JTN5RV": {
+  "address": "11 RUE DU DOCTEUR BONHOMME",
+  "desc": "Adresse : 11 RUE DU DOCTEUR BONHOMME.",
+  "features": [
+   "2ème Étage",
+   "Cuisine équipée, Cuisine ouverte",
+   "Pas d'ascenseur",
+   "Pas de cave",
+   "Non meublé",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-23",
+  "updated": "2026-10-23"
+ },
+ "26JMF8L8ZV3J": {
+  "address": "65 rue Sainte-Anne de Baraban",
+  "desc": "Adresse : 65 rue Sainte-Anne de Baraban.\nMentionné dans l'annonce : balcon, parking, ascenseur.",
+  "features": [
+   "Dernier étage, Étage 8ème / 8",
+   "Ascenseur",
+   "803750000 Boxs de stationnement",
+   "Balcon",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-09-28",
+  "updated": "2026-10-30"
+ },
+ "26JNTCDHN3YJ": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, balcon, garage, ascenseur.",
+  "features": [
+   "Étage 3ème / 6",
+   "Cuisine ouverte",
+   "Ascenseur",
+   "Cave",
+   "Box de stationnement",
+   "1 WC",
+   "Balcon",
+   "Non meublé"
+  ],
+  "created": "2026-10-15",
+  "updated": "2026-10-31"
+ },
+ "26KMG8M56ETB": {
+  "address": "115 rue de Montagny",
+  "desc": "Adresse : 115 rue de Montagny.\nMentionné dans l'annonce : ascenseur.",
+  "features": [
+   "Disponible à partir du 19/12/2026",
+   "5ème Étage",
+   "Cuisine équipée, Cuisine ouverte",
+   "Ascenseur",
+   "Calme",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de douche"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-10-27"
+ },
+ "26LZ3NVF8JBN": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : climatisation, balcon.",
+  "features": [
+   "Dernier étage, Étage 6ème / 6",
+   "Cuisine équipée, Cuisine ouverte",
+   "Ascenseur",
+   "1 WC",
+   "Balcon",
+   "Meublé",
+   "1 Chambre",
+   "Non accessible aux personnes à mobilité réduite"
+  ],
+  "created": "2026-09-26",
+  "updated": "2026-10-23"
+ },
+ "26MHNB6PYBUQ": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Étage 3ème / 4",
+   "Cuisine séparée",
+   "Pas d'ascenseur",
+   "1 WC",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de douche",
+   "Cheminée"
+  ],
+  "created": "2026-08-18",
+  "updated": "2026-10-29"
+ },
+ "26MIVP43GGPT": {
+  "address": "23 rue Saint Mathieu",
+  "desc": "Adresse : 23 rue Saint Mathieu.",
+  "features": [
+   "Rez-de-chaussée / 5 étages",
+   "Cuisine ouverte, Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "1 WC séparées",
+   "Pas de balcon",
+   "Calme",
+   "Exposition: sud, est"
+  ],
+  "created": "2026-10-14",
+  "updated": "2026-11-02"
+ },
+ "26MYNFWGSN5E": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : terrasse, balcon, garage, ascenseur.",
+  "features": [
+   "Disponible immédiatement",
+   "Étage 2ème / 5",
+   "Animaux domestiques sur demande",
+   "Ascenseur",
+   "Cave",
+   "Box de stationnement",
+   "2 Balcons (Total 12 m²)",
+   "Meublé"
+  ],
+  "created": "2026-09-09",
+  "updated": "2026-09-24"
+ },
+ "26NIASIJBDPZ": {
+  "address": "52 rue Abbé Boisard",
+  "desc": "Adresse : 52 rue Abbé Boisard.\nMentionné dans l'annonce : balcon, ascenseur.",
+  "features": [
+   "1er Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Balcon",
+   "2 Chambres",
+   "Accessible aux personne à mobilité réduite",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-11-01"
+ },
+ "26NVR3D41GM7": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : terrasse, garage.",
+  "features": [
+   "6ème Étage",
+   "Cuisine séparée, Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Box de stationnement",
+   "1 WC séparées",
+   "Pas de balcon",
+   "Non meublé"
+  ],
+  "created": "2026-08-28",
+  "updated": "2026-11-02"
+ },
+ "26P73CZHG7RH": {
+  "address": "28 rue Danton",
+  "desc": "Adresse : 28 rue Danton.\nMentionné dans l'annonce : cave.",
+  "features": [
+   "Étage 3ème / 4",
+   "Cuisine séparée, Cuisine intégrée",
+   "Pas d'ascenseur",
+   "Cave (Total 6 m²)",
+   "1 WC séparées",
+   "Exposition: sud",
+   "Meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-09-28",
+  "updated": "2026-10-22"
+ },
+ "26PAJVV5FSQE": {
+  "address": "51 rue de Montagny",
+  "desc": "Adresse : 51 rue de Montagny.\nMentionné dans l'annonce : terrasse, garage.",
+  "features": [
+   "Rez-de-chaussée",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Garage",
+   "Pas de balcon",
+   "Jardin",
+   "Terrasse",
+   "Non meublé"
+  ],
+  "created": "2026-09-16",
+  "updated": "2026-10-11"
+ },
+ "26PF3KK5U9TA": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : ascenseur.",
+  "features": [
+   "Disponible immédiatement",
+   "Étage 1er / 7",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Cave",
+   "1 WC",
+   "Pas de balcon",
+   "Non meublé"
+  ],
+  "created": "2026-10-01",
+  "updated": "2026-11-02"
+ },
+ "26Q657G4YYYJ": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : balcon, garage.",
+  "features": [
+   "Étage 4ème / 6",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Box de stationnement",
+   "1 WC",
+   "Balcon",
+   "Exposition: sud",
+   "Meublé"
+  ],
+  "created": "2026-10-08",
+  "updated": "2026-10-29"
+ },
+ "26QP1H72RLJD": {
+  "address": "52 rue Abbé Boisard",
+  "desc": "Adresse : 52 rue Abbé Boisard.\nMentionné dans l'annonce : balcon, ascenseur.",
+  "features": [
+   "1er Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Balcon",
+   "Meublé",
+   "2 Chambres",
+   "Accessible aux personne à mobilité réduite"
+  ],
+  "created": "2026-09-04",
+  "updated": "2026-10-30"
+ },
+ "26R1GGEID36H": {
+  "address": "17 RUE ANTOINE LUMIERE",
+  "desc": "Adresse : 17 RUE ANTOINE LUMIERE.\nMentionné dans l'annonce : balcon, garage.",
+  "features": [
+   "1er Étage",
+   "Cuisine séparée",
+   "Garage",
+   "Balcon",
+   "Non meublé",
+   "3 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-02",
+  "updated": "2026-10-23"
+ },
+ "26RBJTCEJDLH": {
+  "address": "17 rue de l'Abondance",
+  "desc": "Adresse : 17 rue de l'Abondance.\nMentionné dans l'annonce : ascenseur.",
+  "features": [
+   "2ème Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "1 WC séparées",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de douche",
+   "Colocation possible"
+  ],
+  "created": "2026-10-21",
+  "updated": "2026-10-28"
+ },
+ "26RFUZKWR2YY": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : terrasse, balcon, garage, ascenseur.",
+  "features": [
+   "1er Étage",
+   "Cuisine séparée, Cuisine intégrée",
+   "Ascenseur",
+   "Box de stationnement",
+   "1 WC",
+   "Balcon",
+   "Terrasse",
+   "Calme"
+  ],
+  "created": "2026-07-21",
+  "updated": "2026-10-22"
+ },
+ "26RMMF22IIN5": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : garage, parking.",
+  "features": [
+   "Garage",
+   "1 Chambre",
+   "1 Salle de bain",
+   "1 Salle de douche"
+  ],
+  "created": "2026-05-14",
+  "updated": "2026-10-29"
+ },
+ "26RQDNATV613": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "Disponible immédiatement",
+   "Étage 2ème / 8",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Garage",
+   "Balcon (Total 6 m²)",
+   "Meublé",
+   "3 Chambres"
+  ],
+  "created": "2026-10-07",
+  "updated": "2026-10-07"
+ },
+ "26RV6639Z7NV": {
+  "address": "20 Rue De La Bannière",
+  "desc": "Adresse : 20 Rue De La Bannière.\nMentionné dans l'annonce : terrasse, balcon, garage.",
+  "features": [
+   "2ème Étage",
+   "Cuisine séparée",
+   "Parking",
+   "Balcon",
+   "Terrasse",
+   "Meublé",
+   "2 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-02",
+  "updated": "2026-11-01"
+ },
+ "26S4KI6CUUP8": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Rez-de-chaussée / 5 étages",
+   "Cuisine séparée",
+   "1 WC",
+   "Pas de balcon",
+   "Non meublé",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de bain (Total 2,6 m²)"
+  ],
+  "created": "2026-08-27",
+  "updated": "2026-08-28"
+ },
+ "26SZ1F8TQVG2": {
+  "address": "AVENUE DES FRERES LUMIERE",
+  "desc": "Adresse : AVENUE DES FRERES LUMIERE.\nMentionné dans l'annonce : cave, balcon, garage.",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "1er Étage",
+   "Ascenseur",
+   "Cave",
+   "Box de stationnement",
+   "Balcon",
+   "Non meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-10-29",
+  "updated": "2026-10-31"
+ },
+ "26SZE7MSCXN9": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, balcon, parking, ascenseur.",
+  "features": [
+   "Disponible à partir du 19/11/2026",
+   "3ème Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Cave",
+   "Parking",
+   "1 WC séparées",
+   "Balcon"
+  ],
+  "created": "2026-10-20",
+  "updated": "2026-10-22"
+ },
+ "26T9JBDKLBU8": {
+  "address": "9 rue David",
+  "desc": "Adresse : 9 rue David.",
+  "features": [
+   "1er Étage",
+   "Cuisine équipée, Cuisine ouverte",
+   "Ascenseur",
+   "1 WC",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain",
+   "1 Salle de douche",
+   "Colocation possible"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-10-30"
+ },
+ "26U7VWG221EC": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : ascenseur.",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "3ème Étage",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-11-02"
+ },
+ "26UARNEIW6JR": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 22/12/2026",
+   "5ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Calme",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-18",
+  "updated": "2026-11-02"
+ },
+ "26UDPCHSP5AI": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : climatisation, cave, terrasse, garage.",
+  "features": [
+   "Rez-de-chaussée",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Cave",
+   "Garage",
+   "1 WC",
+   "Pas de balcon",
+   "Jardin"
+  ],
+  "created": "2026-10-01",
+  "updated": "2026-10-22"
+ },
+ "26UW2Y7JKY66": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, balcon, garage, ascenseur.",
+  "features": [
+   "Disponible à partir du 16/11/2026",
+   "Étage 1er / 6",
+   "Cuisine équipée",
+   "Ascenseur",
+   "Cave",
+   "Garage, Parking",
+   "1 WC",
+   "Balcon"
+  ],
+  "created": "2026-10-27",
+  "updated": "2026-10-27"
+ },
+ "26UZ4JX2FDRC": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "5ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "4 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-11-02"
+ },
+ "26VJRJ2UBBC1": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : balcon, parking.",
+  "features": [
+   "Étage 6ème / 8",
+   "Cuisine séparée, Cuisine intégrée",
+   "Ascenseur",
+   "Parking",
+   "1 WC",
+   "Balcon",
+   "Calme",
+   "Non meublé"
+  ],
+  "created": "2026-10-23",
+  "updated": "2026-10-25"
+ },
+ "26VTK91Z2NXB": {
+  "address": "Rue du Docteur Rebatel",
+  "desc": "Adresse : Rue du Docteur Rebatel.",
+  "features": [
+   "5ème Étage",
+   "Cuisine séparée",
+   "Pas d'ascenseur",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-07-21",
+  "updated": "2026-10-08"
+ },
+ "26W3MD4DX3FH": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "1er Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "4 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-15",
+  "updated": "2026-11-02"
+ },
+ "26WXHU3RTUQW": {
+  "address": "167 Avenue Felix Faure",
+  "desc": "Adresse : 167 Avenue Felix Faure.\nMentionné dans l'annonce : cave, ascenseur.",
+  "features": [
+   "2ème Étage",
+   "Cuisine ouverte",
+   "Ascenseur",
+   "Pas de cave",
+   "Non meublé",
+   "2 Chambres",
+   "Non accessible aux personnes à mobilité réduite",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-10-31"
+ },
+ "26WZFJBVANUY": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : cave, garage, ascenseur.",
+  "features": [
+   "Disponible à partir du 18/11/2026",
+   "4ème Étage",
+   "Ascenseur",
+   "Cave",
+   "Parking",
+   "Pas de balcon",
+   "Non meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-10-16",
+  "updated": "2026-10-16"
+ },
+ "26X24A6AR33P": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 29/12/2026",
+   "2ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "4 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-11-02"
+ },
+ "26XJXTNS4394": {
+  "address": "Avenue Félix Faure",
+  "desc": "Adresse : Avenue Félix Faure.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "3ème Étage",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Pas de cave",
+   "Box de stationnement",
+   "Balcon",
+   "Calme",
+   "Exposition: sud"
+  ],
+  "created": "2026-10-30",
+  "updated": "2026-10-31"
+ },
+ "26XWT2YBVJBC": {
+  "address": "135 rue Marius Berliet",
+  "desc": "Adresse : 135 rue Marius Berliet.\nMentionné dans l'annonce : terrasse, garage, parking.",
+  "features": [
+   "Disponible à partir du 01/01/2027",
+   "1er Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Box de stationnement",
+   "Pas de balcon",
+   "Terrasse"
+  ],
+  "created": "2026-10-29",
+  "updated": "2026-10-30"
+ },
+ "26XZ57NICASV": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : terrasse, garage.",
+  "features": [
+   "Rez-de-chaussée",
+   "Cuisine séparée",
+   "Ascenseur",
+   "Garage",
+   "1 WC",
+   "Pas de balcon",
+   "Jardin",
+   "Terrasse"
+  ],
+  "created": "2026-10-08",
+  "updated": "2026-10-22"
+ },
+ "26Y6JFGRJJ6N": {
+  "address": "239 Avenue Jean Jaurès",
+  "desc": "Adresse : 239 Avenue Jean Jaurès.\nMentionné dans l'annonce : balcon, garage, ascenseur.",
+  "features": [
+   "Étage 1er / 5",
+   "Cuisine séparée",
+   "Ascenseur",
+   "803750000 Boxs de stationnement",
+   "Balcon",
+   "Calme",
+   "Non meublé",
+   "2 Chambres"
+  ],
+  "created": "2026-09-01",
+  "updated": "2026-10-12"
+ },
+ "26Y91G9LBEGG": {
+  "address": "3 rue Louis Jasseron",
+  "desc": "Adresse : 3 rue Louis Jasseron.\nMentionné dans l'annonce : terrasse, balcon, garage.",
+  "features": [
+   "2ème Étage",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Box de stationnement",
+   "1 WC séparées",
+   "Pas de balcon",
+   "Terrasse",
+   "Belle vue"
+  ],
+  "created": "2026-10-22",
+  "updated": "2026-10-22"
+ },
+ "26YC4BHYQ9JG": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : balcon, garage.",
+  "features": [
+   "Disponible immédiatement",
+   "Étage 2ème / 3",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Garage, garage double",
+   "Balcon (Total 6 m²)",
+   "Non meublé",
+   "Accessible, Accessible aux personne à mobilité réduite"
+  ],
+  "created": "2026-10-18",
+  "updated": "2026-10-18"
+ },
+ "26YNSPNFC3E9": {
+  "address": "",
+  "desc": "Mentionné dans l'annonce : terrasse, balcon, ascenseur.",
+  "features": [
+   "Disponible à partir du 01/01/2027",
+   "Dernier étage, Étage 5ème / 5",
+   "Animaux domestiques sur demande",
+   "Cuisine intégrée",
+   "Ascenseur",
+   "Pas de cave",
+   "Balcon",
+   "Meublé"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-10-31"
+ },
+ "26YZ6766LN8G": {
+  "address": "34 RUE BATAILLE",
+  "desc": "Adresse : 34 RUE BATAILLE.\nMentionné dans l'annonce : garage.",
+  "features": [
+   "Rez-de-chaussée",
+   "Garage",
+   "Non meublé",
+   "2 Chambres",
+   "1 Salle de bain",
+   "Entrée séparée"
+  ],
+  "created": "2026-07-30",
+  "updated": "2026-10-29"
+ },
+ "26Z493SED9GQ": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 28/11/2026",
+   "3ème Étage",
+   "Cuisine intégrée",
+   "Pas d'ascenseur",
+   "Meublé",
+   "3 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-09-27",
+  "updated": "2026-11-02"
+ },
+ "26ZCU2GX3JNP": {
+  "address": "",
+  "desc": "",
+  "features": [
+   "Disponible à partir du 01/12/2026",
+   "3ème Étage",
+   "Cuisine équipée",
+   "Pas d'ascenseur",
+   "Calme",
+   "Meublé",
+   "4 Chambres",
+   "1 Salle de bain"
+  ],
+  "created": "2026-10-31",
+  "updated": "2026-11-02"
+ }
+}

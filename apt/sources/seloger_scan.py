@@ -1,7 +1,8 @@
 """SeLoger results read from YOUR browser (by Claude, on request), saved in seloger_scan.txt.
 
 No request is ever made to SeLoger from here: this only parses the saved card texts.
-Positions are neighbourhood centres (cards don't give the address), so commute is approximate.
+Cards only give the neighbourhood; seloger_details.json (each ad page, also read in your browser)
+adds the full description, features and creation date, from which the pipeline takes the address.
 """
 from __future__ import annotations
 
@@ -69,6 +70,27 @@ def parse_line(line: str) -> dict | None:
     return d
 
 
+RE_COUNT = re.compile(r"^(\d+)\s+Salles? d(?:e bains?|['’]eau|e douche)", re.I)
+
+
+def apply_details(l: Listing, det: dict) -> None:
+    """Merge what the ad page says (description, feature list, dates) into the card listing."""
+    feats = det.get("features") or []
+    if det.get("desc"):
+        l.description = f"{det['desc']}\n{l.description}"
+    if feats:  # "Ascenseur", "Pas de cave", "Balcon"… : the text matcher already handles negations
+        l.description += "\nCaractéristiques : " + ". ".join(feats) + "."
+    baths = sum(int(m.group(1)) for f in feats if (m := RE_COUNT.match(f)))
+    if baths:
+        l.bathrooms = baths
+        if baths >= 2 and "baths2" not in l.features:
+            l.features.append("baths2")
+    if any(f.lower() == "meublé" for f in feats):
+        l.furnished = True
+    l.published = det.get("created") or l.published
+    l.updated = det.get("updated") or l.updated
+
+
 def fetch(cfg: dict) -> list[Listing]:
     c = cfg["sources"].get("seloger_scan") or {}
     path = Path(c.get("file", "seloger_scan.txt"))
@@ -89,9 +111,14 @@ def fetch(cfg: dict) -> list[Listing]:
     fav_file = Path((cfg["sources"].get("favorites") or {}).get("file", "favorites.json"))
     if fav_file.exists():
         fav_ids = {f["url"].split("?")[0].rstrip("/").rsplit("/", 1)[-1] for f in json.loads(fav_file.read_text())}
+    det_file = Path(c.get("details_file", "seloger_details.json"))
+    details = json.loads(det_file.read_text()) if det_file.exists() else {}
     out = []
     for d in rows:
         if d["id"] in fav_ids:  # your favourites carry richer data
+            continue
+        det = details.get(d["id"]) or {}
+        if det.get("gone"):  # ad removed since the scan
             continue
         pos = QUARTIERS.get(d.get("quartier", "").lower())
         out.append(Listing(
@@ -103,6 +130,9 @@ def fetch(cfg: dict) -> list[Listing]:
             photo="" if d["photo"] in shared else d["photo"],
             description=f"Quartier {d.get('quartier', '?')}. {d['text']}",
             note=d.get("quartier", ""),
+            extra={"geo": {"level": "zone", "label": f"{d.get('quartier', '?')} ({d.get('postal_code', '')})",
+                           "radius_m": 600}},
         ))
-    print(f"  [seloger_scan] {len(out)} cards from {path} (scanned {scanned_at})")
+        apply_details(out[-1], det)
+    print(f"  [seloger_scan] {len(out)} cards from {path} (scanned {scanned_at}), {len(details)} ad pages read")
     return out

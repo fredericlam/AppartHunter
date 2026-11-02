@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Corridor, Listing, Target } from "./types";
@@ -28,6 +28,8 @@ function spread(key: string, lat: number, lon: number): [number, number] {
   return [lat + r * Math.sin(angle), lon + (r * Math.cos(angle)) / Math.cos((lat * Math.PI) / 180)];
 }
 
+const ZONE_COLOR = "#d9822b";
+
 const LINE_COLOR = (name: string) => (name.includes("T4") ? "#7c5cbf" : "#2f9e5b");
 
 export default function MapView({ listings, targets, idealMinutes, corridors, accent, dark, activeKey, onSelect }: Props) {
@@ -36,6 +38,7 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
   const layer = useRef<L.LayerGroup | null>(null);
   const markers = useRef(new Map<string, L.Marker>());
   const fitted = useRef(false);
+  const [hoverKey, setHoverKey] = useState<string | null>(null);
 
   // init once
   useEffect(() => {
@@ -121,7 +124,8 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
         }),
         riseOnHover: true,
         zIndexOffset: l.favorite ? 1500 : 0,
-      }).on("click", () => onSelect(l.key));
+      }).on("click", () => onSelect(l.key))
+        .on("mouseover", () => setHoverKey(l.key)).on("mouseout", () => setHoverKey(null));
       mk.addTo(lg);
       markers.current.set(l.key, mk);
       pts.push([lat, lon]);
@@ -142,6 +146,24 @@ export default function MapView({ listings, targets, idealMinutes, corridors, ac
       mk.setZIndexOffset(key === activeKey ? 1800 : fav ? 1500 : 0);
     });
   }, [activeKey, listings]);
+
+  // approximate listing hovered (map or list) or selected: show the zone it may be in
+  const zoneKey = hoverKey ?? activeKey;
+  useEffect(() => {
+    const m = map.current;
+    const l = zoneKey ? listings.find((x) => x.key === zoneKey) : null;
+    if (!m || !l || l.location_precise || l.lat == null || l.lon == null) return;
+    const radius = l.geo?.radius_m ?? 1000;
+    const zone = L.circle([l.lat, l.lon], {
+      radius, color: ZONE_COLOR, weight: 1.5, dashArray: "5 5", fillColor: ZONE_COLOR, fillOpacity: 0.1,
+      interactive: false, className: "zone-area",
+    }).addTo(m);
+    const label = L.tooltip({ permanent: true, direction: "top", className: "zone-label", offset: [0, -4] })
+      .setLatLng([l.lat + radius / 111320, l.lon])
+      .setContent(`Zone · ${l.geo?.label || [l.city, l.postal_code].filter(Boolean).join(" ")} · ±${Math.round(radius / 100) / 10} km`)
+      .addTo(m);
+    return () => { zone.remove(); label.remove(); };
+  }, [zoneKey, listings]);
 
   return <div ref={el} className="map" />;
 }

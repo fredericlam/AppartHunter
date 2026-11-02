@@ -90,7 +90,10 @@ def to_listing(a: dict) -> Listing:
         features=features_of(a),
         photo=(photos[0].get("url") if photos else "") or "",
         description=(a.get("description") or "")[:1500],
-        extra={"charges": a.get("charges"), "agency": a.get("accountType")},
+        extra={"charges": a.get("charges"), "agency": a.get("accountType"),
+               **({} if bool(pos) and (a.get("blurInfo") or {}).get("radius", 999) <= 150 else
+                  {"geo": {"level": "zone", "radius_m": min(2000, (a.get("blurInfo") or {}).get("radius") or 1000),
+                           "label": f"{a.get('city', '')} ({a.get('postalCode', '')})"}})},
     )
 
 

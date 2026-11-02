@@ -224,7 +224,18 @@ svg { flex: none; }
   box-shadow: 0 0 0 1px var(--line-strong), 0 1px 3px rgb(0 0 0 / .12);
   cursor: pointer; transition: transform .12s, background .12s, color .12s;
 }
-.pin.approx { background: color-mix(in oklab, var(--surface) 70%, transparent); color: var(--muted); }
+/* exact address unknown: amber, dashed — "zone only" */
+.pin.approx {
+  --zone: #d9822b;
+  background: color-mix(in oklab, var(--zone) 16%, var(--surface)); color: color-mix(in oklab, var(--zone) 70%, var(--ink));
+  box-shadow: 0 0 0 1.5px var(--zone), 0 1px 3px rgb(0 0 0 / .12); outline: 1.5px dashed var(--surface); outline-offset: -1.5px;
+}
+.pin.approx:hover, .pin.approx.active { background: #d9822b; color: #fff; box-shadow: 0 0 0 1.5px #d9822b, 0 2px 6px rgb(217 130 43 / .45); }
+.zone-label {
+  background: #d9822b; color: #fff; border: 0; border-radius: 6px; font: 600 11.5px/1.2 var(--font);
+  padding: 4px 8px; box-shadow: 0 2px 8px rgb(0 0 0 / .18);
+}
+.zone-label::before { border-top-color: #d9822b !important; }
 .pin:hover, .pin.active {
   background: var(--accent); color: var(--on-accent); transform: translate(-50%, -50%) scale(1.1);
   box-shadow: 0 0 0 1px var(--accent), 0 2px 6px color-mix(in oklab, var(--accent) 40%, transparent);
@@ -296,3 +307,13 @@ svg { flex: none; }
 .src-seloger   { --c: #e3001b; }
 .src-bienici   { --c: #f2a900; }
 .src-leboncoin { --c: #ec5a13; }
+
+/* card: where the position comes from */
+.zone-badge {
+  display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; color: color-mix(in oklab, #d9822b 80%, var(--ink));
+  background: color-mix(in oklab, #d9822b 14%, var(--surface)); box-shadow: inset 0 0 0 1px color-mix(in oklab, #d9822b 45%, var(--surface));
+  cursor: help;
+}
+.zone-badge svg { width: 12px; height: 12px; }
+.addr { font-size: 12.5px; color: var(--ink); }

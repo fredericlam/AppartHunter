@@ -313,7 +313,7 @@ function Card({ l, mark, active, ideal, school, onHover, onToggle }: {
               {l.location_precise ? "" : "~"}{l.commute_min} min {l.commute_mode === "walk" ? "walk" : "by transit"}
             </span>
           ) : <span className="muted">location unknown</span>}
-          <span className="muted">{[l.city, l.postal_code].filter(Boolean).join(" ")}</span>
+          <Located l={l} />
           <GmapsLinks l={l} school={school} />
         </div>
         {(l.near ?? []).length > 0 && (
@@ -361,10 +361,25 @@ function Dates({ l }: { l: Listing }) {
   );
 }
 
+/** Where the position comes from: exact address read in the ad, ~150 m, or only a zone (highlighted). */
+function Located({ l }: { l: Listing }) {
+  const place = [l.city, l.postal_code].filter(Boolean).join(" ");
+  if (!l.location_precise)
+    return (
+      <span className="zone-badge" title="Exact address unknown: the listing only gives this area. Hover to see the zone on the map.">
+        <Pin /> Zone · {l.geo?.label || place}
+      </span>
+    );
+  if (l.geo?.level === "address" || l.geo?.level === "street")
+    return <span className="addr" title="Address read in the listing text">{l.geo.label || place}</span>;
+  return <span className="muted">{place}</span>;
+}
+
 /** Google Maps: the listing's position (exact point when known, else its area) + transit route to school. */
 function GmapsLinks({ l, school }: { l: Listing; school?: Target }) {
   const area = [l.postal_code, l.city].filter(Boolean).join(" ");
-  const here = l.location_precise && l.lat != null ? `${l.lat},${l.lon}` : area;
+  const exact = l.geo?.level === "address" || l.geo?.level === "street";
+  const here = exact && l.geo?.label ? l.geo.label : l.location_precise && l.lat != null ? `${l.lat},${l.lon}` : area;
   if (!here) return null;
   const q = encodeURIComponent(here);
   const place = `https://www.google.com/maps/search/?api=1&query=${q}`;
@@ -373,7 +388,7 @@ function GmapsLinks({ l, school }: { l: Listing; school?: Target }) {
   return (
     <span className="gmaps">
       <a href={place} target="_blank" rel="noreferrer"
-        title={l.location_precise ? "Position given by the listing, within ~150 m (agencies hide the exact address)" : "Exact position not given: shows the area"}>
+        title={exact ? "Address written in the listing" : l.location_precise ? "Position given by the listing, within ~150 m (agencies hide the exact address)" : "Exact position not given: shows the area"}>
         <Pin /> Google Maps
       </a>
       {route && <a href={route} target="_blank" rel="noreferrer" title="Real public-transport route to school"><Route /> Route to school</a>}

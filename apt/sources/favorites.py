@@ -9,12 +9,15 @@ import json
 from pathlib import Path
 
 from ..models import Listing
+from . import seloger_scan
 
 
 def fetch(cfg: dict) -> list[Listing]:
     path = Path((cfg["sources"].get("favorites") or {}).get("file", "favorites.json"))
     if not path.exists():
         return []
+    det_file = Path((cfg["sources"].get("seloger_scan") or {}).get("details_file", "seloger_details.json"))
+    details = json.loads(det_file.read_text()) if det_file.exists() else {}
     out = []
     for f in json.loads(path.read_text()):
         url = f["url"].split("?")[0]
@@ -44,5 +47,7 @@ def fetch(cfg: dict) -> list[Listing]:
             favorite=True,
             note=f.get("note", "") or (f"Area: {f['area']}" if f.get("area") else ""),
         ))
+        if out[-1].source == "seloger" and (det := details.get(out[-1].source_id)):
+            seloger_scan.apply_details(out[-1], det)
     print(f"  [favorites] {len(out)} from {path}")
     return out

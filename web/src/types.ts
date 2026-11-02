@@ -36,6 +36,8 @@ export interface Listing {
   charges: number | null;
   also_on: { source: string; url: string }[];
   score_parts: Record<string, number>;
+  /** how well the position is known: exact address / street (read in the ad text), ~150 m, or only a zone */
+  geo?: { level: "address" | "street" | "near" | "zone"; label: string; radius_m?: number } | null;
 }
 
 export interface Target { name: string; lat: number; lon: number }

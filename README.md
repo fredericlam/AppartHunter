@@ -36,12 +36,13 @@ Settings (school sites, rooms, budget, cities, score weights) are in `config.yam
 | Source | How | Notes |
 |---|---|---|
 | **Bien'ici** | public JSON endpoint of their site | aggregates thousands of agencies (incl. most agency ads also on SeLoger/Logic-Immo). GPS, parking/garage, flatshare flag. |
-| **Leboncoin, SeLoger, PAP, Logic-Immo, Figaro Immo, Orpi, Century 21, Foncia…** | **their own e-mail alerts**, read from your mailbox | These sites block automated access, so the app never contacts them. Save a search with instant e-mail alerts on each site; the app reads those e-mails over IMAP (read-only). |
+| **SeLoger** (saved search + favourites) | read **in your own Chrome by Claude, on request** ("rescanne SeLoger") → `seloger_scan.txt` (cards), `seloger_details.json` (each ad page), `favorites.json` | The app itself never contacts SeLoger. The ad text often gives the street address: it is geocoded so the flat sits at its real place. Scans older than 21 days are ignored. |
+| **Leboncoin** | same, once you have passed their captcha yourself | — |
+| e-mail alerts (IMAP) | disabled (`email_alerts.enabled: false`) | Kept in the code, not used. |
 
-E-mail alerts setup (Gmail): enable 2-step verification → create an *App password* → set `email_alerts.enabled: true`
-and your address in `config.yaml` → add the app password as a **GitHub secret** named `APT_IMAP_PASSWORD`
-(Settings → Secrets and variables → Actions). Locally: `export APT_IMAP_PASSWORD=...` then
-`.venv/bin/python run.py emails` to see what gets extracted.
+**Position quality.** If the address is written in the ad (any source) it is geocoded (`address` / `street`).
+Otherwise Bien'ici gives a point within ~150 m (`near`), or only an area (`zone`): those pins are **amber and dashed**
+on the map, the card shows a "Zone · …" badge, and hovering the card or pin draws the zone it may be in.
 
 ## Ranking
 

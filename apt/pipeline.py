@@ -10,10 +10,46 @@ from .models import Listing
 CENTROID_SLACK_MIN = 8  # arrondissement-level positions are fuzzy: be lenient
 
 
+_STREET = r"(?i:rue|avenue|av\.|boulevard|bd|cours|place|quai|chemin|impasse|all[ée]e|mont[ée]e|passage|square)"
+_NAME = r"(?:(?:d[eu]|de la|des|de l['’]|d['’]|l['’])[ \t]*)?[A-ZÉÈÀÂ][\w'’\-]*(?:[ \t]+(?:[A-ZÉÈÀÂ][\w'’\-]*|d[eu]|de|la|des|et|l['’][\wÉ]+|d['’][\wÉ]+)){0,4}"
+RE_ADDRESS = re.compile(rf"\b(\d{{1,4}})[ \t]*(?:(?i:bis|ter)\b)?[ \t]*,?[ \t]+({_STREET}[ \t]+{_NAME})")
+RE_STREET_HERE = re.compile(rf"(?i:situ[ée]e?s?|sis|au|dans la|en plein|adresse\s*:?)\s+(?:au\s+)?({_STREET}[ \t]+{_NAME})")
+RE_TRAILING_WORDS = re.compile(r"(?:\s+(?:d[eu]|de|la|des|et))+$")
+
+
+def find_address(text: str) -> tuple[str, bool] | None:
+    """Street address written in the ad text: (address, has_house_number), or None.
+    A street without number only counts when the text says the flat is *on* it ("situé rue X")."""
+    if m := RE_ADDRESS.search(text):
+        return f"{m.group(1)} {RE_TRAILING_WORDS.sub('', m.group(2))}", True
+    if m := RE_STREET_HERE.search(text):
+        return RE_TRAILING_WORDS.sub("", m.group(1)), False
+    return None
+
+
+def _pin_from_text(l: Listing) -> bool:
+    """Imprecise listing whose text gives the address: geocode it (must fall in the same postcode)."""
+    found = find_address(f"{l.title}\n{l.description}")
+    if not found:
+        return False
+    addr, _ = found
+    city = "Lyon" if (l.postal_code or "").startswith("6900") else (l.city or "")
+    res = geo.geocode_address(f"{addr} {l.postal_code} {city}".strip(), l.postal_code)
+    if not res:
+        return False
+    l.lat, l.lon, l.location_precise = res["lat"], res["lon"], True
+    l.extra["geo"] = {"level": res["level"], "label": res["label"]}
+    return True
+
+
 def locate(listings: list[Listing], targets: list[tuple[float, float]], corridors: list[dict] = ()) -> None:
     """Position each listing, then compute distance/commute to the *farthest* target
     (every child must be able to get to school)."""
     for l in listings:
+        if not l.location_precise and _pin_from_text(l):
+            pass
+        elif l.location_precise:
+            l.extra.setdefault("geo", {"level": "near", "label": ""})
         if l.lat is None:
             q = " ".join(x for x in [l.postal_code, l.city] if x)
             if q:
@@ -21,6 +57,11 @@ def locate(listings: list[Listing], targets: list[tuple[float, float]], corridor
                 if pos:
                     l.lat, l.lon = pos
                     l.location_precise = False
+        if not l.location_precise:
+            z = l.extra.setdefault("geo", {})
+            z.setdefault("level", "zone")
+            z.setdefault("label", " ".join(x for x in [l.city, l.postal_code and f"({l.postal_code})"] if x))
+            z.setdefault("radius_m", 1000)
         if l.lat is not None:
             l.distance_km = round(max(geo.haversine_km(t, (l.lat, l.lon)) for t in targets), 2)
             l.commute_min, l.commute_mode = geo.commute(l.distance_km)

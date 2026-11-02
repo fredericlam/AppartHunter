@@ -64,6 +64,7 @@ sources:
   seloger_scan:
     enabled: true
     file: seloger_scan.txt    # SeLoger results read from your browser by Claude, on request
+    details_file: seloger_details.json  # each ad page (description, features, date) → exact address
     max_age_days: 21          # older scans are ignored (listings may be gone)
   bienici:
     enabled: true

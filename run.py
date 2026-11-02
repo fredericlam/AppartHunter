@@ -60,7 +60,7 @@ def export(cfg: dict, db: DB, targets, status: dict, keep_previous_listings: boo
         d = {k: v for k, v in asdict(l).items() if k not in DROP_FIELDS}
         d.update(key=l.key, first_seen=first_seen, last_seen=last_seen, price_per_m2=l.price_per_m2,
                  charges=l.extra.get("charges"), also_on=l.extra.get("also_on", []),
-                 score_parts=l.extra.get("score_parts", {}))
+                 score_parts=l.extra.get("score_parts", {}), geo=l.extra.get("geo"))
         listings.append(d)
     listings.sort(key=lambda d: -d["score"])
     if keep_previous_listings:  # a failed run must never wipe what the site shows

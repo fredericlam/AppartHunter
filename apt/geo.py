@@ -36,6 +36,33 @@ def geocode(query: str) -> tuple[float, float] | None:
     return res
 
 
+def geocode_address(query: str, postcode: str = "") -> dict | None:
+    """Street-level geocoding: {'lat','lon','level': 'address'|'street','label'} or None.
+    Rejects weak matches and results outside the listing's postcode."""
+    cache = _load()
+    ck = f"addr|{query}|{postcode}"
+    if ck in cache:
+        return cache[ck]
+    params = {"q": query, "limit": 1}
+    if postcode:
+        params["postcode"] = postcode
+    r = http.get("https://api-adresse.data.gouv.fr/search/", params=params)
+    feats = r.json().get("features") or []
+    res = None
+    if feats:
+        f = feats[0]
+        p = f["properties"]
+        if p.get("score", 0) >= 0.55 and p.get("type") in ("housenumber", "street") \
+                and (not postcode or p.get("postcode") == postcode):
+            lon, lat = f["geometry"]["coordinates"]
+            res = {"lat": lat, "lon": lon, "label": p.get("label", ""),
+                   "level": "address" if p["type"] == "housenumber" else "street"}
+    cache[ck] = res
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=0))
+    return res
+
+
 def haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
     lat1, lon1, lat2, lon2 = map(math.radians, (*a, *b))
     h = math.sin((lat2 - lat1) / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1) / 2) ** 2
